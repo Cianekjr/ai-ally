@@ -1,0 +1,11 @@
+<mjml>
+  <mj-body>
+    <mj-section>
+      <mj-column>
+        <mj-text color="#000">Please confirm your registration at Infflu:</mj-text>
+
+        <mj-button color="#000" background-color="#F00" href="{{confirmationLink}}">Confirm</mj-button>
+      </mj-column>
+    </mj-section>
+  </mj-body>
+</mjml>
