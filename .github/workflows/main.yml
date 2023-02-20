@@ -18,6 +18,9 @@ jobs:
       - name: Install global
         run: npm install turbo --global && npm install pnpm --global
 
+      - name: Install dependencies
+        run: pnpm install
+
       - name: Build
         run: turbo build --filter=server
         
