@@ -11,46 +11,16 @@ datasource db {
 }
 
 model User {
-  id                  Int                @id @default(autoincrement())
-  createdAt           DateTime           @default(now())
-  updatedAt           DateTime           @updatedAt
-  email               String             @unique
-  type                AccountType
+  id                  Int       @id @default(autoincrement())
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+  email               String    @unique
   password            String
-  isActive            Boolean            @default(false)
-  refreshToken        String?            @unique
+  isActive            Boolean   @default(false)
+  refreshToken        String?   @unique
   refreshTokenExp     DateTime?
-  confirmationToken   String?            @unique
+  confirmationToken   String?   @unique
   confirmationDate    DateTime?
-  forgotPasswordToken String?            @unique
+  forgotPasswordToken String?   @unique
   forgotPasswordDate  DateTime?
-  profileBusiness     ProfileBusiness?
-  profileInfluencer   ProfileInfluencer?
-}
-
-enum AccountType {
-  BUSINESS
-  INFLUENCER
-}
-
-model ProfileBusiness {
-  id          Int      @id @default(autoincrement())
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  name        String   @unique
-  description String
-
-  user   User @relation(fields: [userId], references: [id])
-  userId Int  @unique
-}
-
-model ProfileInfluencer {
-  id          Int      @id @default(autoincrement())
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  name        String   @unique
-  description String
-
-  user   User @relation(fields: [userId], references: [id])
-  userId Int  @unique
 }

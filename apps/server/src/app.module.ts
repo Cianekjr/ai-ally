@@ -6,9 +6,6 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { PrismaModule } from './prisma/prisma.module';
 import { AuthModule } from './auth/auth.module';
 import { MailerModule } from './mailer/mailer.module';
-import { ProfilesBusinessModule } from './profilesBusiness/profilesBusiness.module';
-import { ProfilesInfluencerModule } from './profilesInfluencer/profilesInfluencer.module';
-import { IntegrationsModule } from './integrations/integrations.module';
 
 @Module({
   imports: [
@@ -16,9 +13,6 @@ import { IntegrationsModule } from './integrations/integrations.module';
     PrismaModule,
     UsersModule,
     AuthModule,
-    ProfilesBusinessModule,
-    ProfilesInfluencerModule,
-    IntegrationsModule,
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       debug: true,
@@ -37,4 +31,4 @@ import { IntegrationsModule } from './integrations/integrations.module';
     MailerModule,
   ],
 })
-export class AppModule {}
+export class AppModule { }

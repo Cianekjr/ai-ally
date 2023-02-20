@@ -1,4 +1,4 @@
-import { User as UserType } from 'db';
+import { User as UserType } from 'db'
 
 export interface UserJwtPayload {
   sub: UserType['id'];
