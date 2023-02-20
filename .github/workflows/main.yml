@@ -23,14 +23,12 @@ jobs:
 
       - name: Build
         run: turbo build --filter=server
-        
-
+      
       - uses: akhileshns/heroku-deploy@v3.12.13
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: "guide-me-now"
           heroku_email: ${{secrets.HEROKU_DEPLOY_EMAIL}}
           branch: "dev"
-          buildpack: "heroku/nodejs"
           procfile: "web: cd apps/server && pnpm run start"
-          appdir: 'apps/server'
+          buildpack: "https://github.com/unfold/heroku-buildpack-pnpm"
