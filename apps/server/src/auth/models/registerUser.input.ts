@@ -1,5 +1,4 @@
 import { Field, InputType } from '@nestjs/graphql';
-import { AccountType } from 'db';
 import {
   IsEmail,
   IsEnum,
@@ -21,8 +20,4 @@ export class UserRegisterInput {
   @MinLength(8)
   @MaxLength(100)
   readonly password: string;
-
-  @Field(() => AccountType, { nullable: false })
-  @IsEnum(AccountType)
-  readonly type: AccountType;
 }

@@ -1,7 +1,4 @@
 import { Field, Int, ObjectType, registerEnumType } from '@nestjs/graphql';
-import {
-  AccountType,
-} from 'db';
 
 @ObjectType()
 export class UserModel {
@@ -13,9 +10,6 @@ export class UserModel {
 
   @Field()
   password: string;
-
-  @Field(() => AccountType)
-  type: AccountType;
 
   @Field({ nullable: true })
   refreshToken?: string;
@@ -35,7 +29,3 @@ export class UserModel {
   @Field({ nullable: true })
   forgotPasswordDate?: Date;
 }
-
-registerEnumType(AccountType, {
-  name: 'AccountType',
-});

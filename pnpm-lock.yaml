@@ -42,11 +42,19 @@ importers:
   apps/db:
     specifiers:
       '@prisma/client': ^4.10.1
+      '@types/node': ^18.14.0
+      eslint-config-custom: workspace:*
       prisma: ^4.10.1
+      tsconfig: workspace:*
+      typescript: ^4.9.5
     dependencies:
       '@prisma/client': 4.10.1_prisma@4.10.1
+      tsconfig: link:../../packages/tsconfig
     devDependencies:
+      '@types/node': 18.14.0
+      eslint-config-custom: link:../../packages/eslint-config-custom
       prisma: 4.10.1
+      typescript: 4.9.5
 
   apps/server:
     specifiers:
