@@ -31,5 +31,4 @@ jobs:
           heroku_app_name: "guide-me-now"
           heroku_email: ${{secrets.HEROKU_DEPLOY_EMAIL}}
           branch: "dev"
-          buildpack: "heroku/nodejs"
           procfile: "web: cd apps/server && pnpm run start"
