@@ -35,7 +35,7 @@ jobs:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: "guide-me-now26"
           heroku_email: ${{secrets.HEROKU_DEPLOY_EMAIL}}
-          branch: "dev"
+          # branch: "dev"
           procfile: "web: cd apps/server && pnpm run start"
         env:
           DATABASE_URL: ${{secrets.DATABASE_URL}}
