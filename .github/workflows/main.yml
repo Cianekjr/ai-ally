@@ -28,7 +28,7 @@ jobs:
         run: turbo build
 
       - name: Pull
-        run: git pull heroku main
+        run: git pull heroku main --ff-only
       
       - uses: akhileshns/heroku-deploy@v3.12.13
         with:
