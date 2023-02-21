@@ -38,9 +38,19 @@ jobs:
           heroku_email: ${{secrets.HEROKU_DEPLOY_EMAIL}}
           # branch: "dev"
           procfile: "web: cd apps/server && pnpm run start"
+          justlogin: true
         env:
           HEROKU_API_KEY: ${{secrets.HEROKU_API_KEY}}
           DATABASE_URL: ${{secrets.DATABASE_URL}}
           JWT_SECRET: ${{secrets.JWT_SECRET}}
           MAILGUN_API_KEY: ${{secrets.MAILGUN_API_KEY}}
+      
+      - name: "Login to heroku registry"
+        run: heroku container:login
+
+      - name: "Build and push to heroku registry"
+        run: heroku container:push web --app guide-me-now26
+
+      - name: "Releases the container"
+        run: heroku container:release web --app guide-me-now26
 
