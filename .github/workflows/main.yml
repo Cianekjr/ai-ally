@@ -9,15 +9,12 @@ env:
   DATABASE_URL: ${{secrets.DATABASE_URL}}
   JWT_SECRET: ${{secrets.JWT_SECRET}}
   MAILGUN_API_KEY: ${{secrets.MAILGUN_API_KEY}}
-  HEROKU_API_KEY: ${{secrets.HEROKU_API_KEY}}
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-        with:
-          fetch-depth: 2
 
       - name: Install global
         run: npm install turbo --global && npm install pnpm --global
@@ -27,30 +24,15 @@ jobs:
 
       - name: Build
         run: turbo build
-
-      - name: Pull
-        run: git pull origin main --rebase
       
       - uses: akhileshns/heroku-deploy@v3.12.13
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: "guide-me-now26"
           heroku_email: ${{secrets.HEROKU_DEPLOY_EMAIL}}
-          # branch: "devd"
           procfile: "web: cd apps/server && pnpm run start"
-          justlogin: true
         env:
-          HEROKU_API_KEY: ${{secrets.HEROKU_API_KEY}}
           DATABASE_URL: ${{secrets.DATABASE_URL}}
           JWT_SECRET: ${{secrets.JWT_SECRET}}
           MAILGUN_API_KEY: ${{secrets.MAILGUN_API_KEY}}
-      
-      - name: "Login to heroku registry"
-        run: heroku container:login
-
-      - name: "Build and push to heroku registry"
-        run: heroku container:push web --app guide-me-now26
-
-      - name: "Releases the container"
-        run: heroku container:release web --app guide-me-now26
 
