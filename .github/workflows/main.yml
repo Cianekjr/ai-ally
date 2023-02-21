@@ -28,7 +28,7 @@ jobs:
         run: turbo build
 
       - name: Pull
-        run: git pull
+        run: git pull origin main
       
       - uses: akhileshns/heroku-deploy@v3.12.13
         with:
