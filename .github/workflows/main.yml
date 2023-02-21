@@ -33,11 +33,11 @@ jobs:
           branch: "dev"
           procfile: "web: cd apps/server && pnpm run start"
           buildpack: "https://github.com/unfold/heroku-buildpack-pnpm"
-          dontuseforce: true
-          usedocker: true
-          docker_build_args: |
-            DATABASE_URL
-            JWT_SECRET
+          # dontuseforce: true
+          # usedocker: true
+          # docker_build_args: |
+          #   DATABASE_URL
+          #   JWT_SECRET
         env:
           DATABASE_URL: ${{secrets.DATABASE_URL}}
           JWT_SECRET: ${{secrets.JWT_SECRET}}
