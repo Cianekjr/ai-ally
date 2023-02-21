@@ -7,6 +7,9 @@
     "db:generate": "tsc && prisma generate",
     "db:push": "prisma db push --skip-generate"
   },
+  "engines": {
+    "node": ">=16.x"
+  },
   "dependencies": {
     "@prisma/client": "^4.10.1",
     "tsconfig": "workspace:*"

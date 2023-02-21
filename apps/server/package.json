@@ -13,6 +13,9 @@
     "test": "jest",
     "seed": "ts-node ./prisma/seeds/seed.ts"
   },
+  "engines": {
+    "node": ">=16.x"
+  },
   "dependencies": {
     "@nestjs/apollo": "^10.2.0",
     "@nestjs/axios": "^0.1.2",
