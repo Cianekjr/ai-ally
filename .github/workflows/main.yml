@@ -58,6 +58,6 @@ jobs:
       - name: Remote
         run: git remote
       - name: Push to Heroku
-        run: git push heroku dev:refs/heads/main
+        run: git push heroku dev:refs/heads/master
         env:
           HEROKU_APP_NAME: "guide-me-now26"
