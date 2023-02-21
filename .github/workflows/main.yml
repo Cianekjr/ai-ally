@@ -33,3 +33,12 @@ jobs:
           branch: "dev"
           procfile: "web: cd apps/server && pnpm run start"
           buildpack: "https://github.com/unfold/heroku-buildpack-pnpm"
+          usedocker: true
+          docker_build_args: |
+            DATABASE_URL
+            JWT_SECRET
+        env:
+          DATABASE_URL: ${{secrets.DATABASE_URL}}
+          JWT_SECRET: ${{secrets.JWT_SECRET}}
+          MAILGUN_API_KEY: ${{secrets.MAILGUN_API_KEY}}
+
