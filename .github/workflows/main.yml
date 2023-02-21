@@ -25,7 +25,7 @@ jobs:
       - name: Build
         run: turbo build --filter=server
       
-      - uses: akhileshns/heroku-deploy@v3.12.13
+      - uses: akhileshns/heroku-deploy@v3.7.8
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: "guide-me-now21"
