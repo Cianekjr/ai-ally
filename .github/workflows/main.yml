@@ -26,16 +26,17 @@ jobs:
       - name: Build
         run: turbo build
       
-      # - uses: akhileshns/heroku-deploy@v3.12.13
-      #   with:
-      #     heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-      #     heroku_app_name: "guide-me-now26"
-      #     heroku_email: ${{secrets.HEROKU_DEPLOY_EMAIL}}
-      #     procfile: "web: cd apps/server && pnpm run start"
-      #   env:
-      #     DATABASE_URL: ${{secrets.DATABASE_URL}}
-      #     JWT_SECRET: ${{secrets.JWT_SECRET}}
-      #     MAILGUN_API_KEY: ${{secrets.MAILGUN_API_KEY}}
+      - uses: akhileshns/heroku-deploy@v3.12.13
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: "guide-me-now26"
+          heroku_email: ${{secrets.HEROKU_DEPLOY_EMAIL}}
+          procfile: "web: cd apps/server && pnpm run start"
+          justlogin: true
+        env:
+          DATABASE_URL: ${{secrets.DATABASE_URL}}
+          JWT_SECRET: ${{secrets.JWT_SECRET}}
+          MAILGUN_API_KEY: ${{secrets.MAILGUN_API_KEY}}
 
       - name: Heroku login credentials
         run: |
@@ -58,3 +59,5 @@ jobs:
         run: git remote
       - name: Push to Heroku
         run: git push heroku main
+        env:
+          HEROKU_APP_NAME: "guide-me-now26"
