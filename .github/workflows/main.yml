@@ -30,18 +30,13 @@ jobs:
       - uses: akhileshns/heroku-deploy@v3.12.13
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-          heroku_app_name: "guide-me-now25"
+          heroku_app_name: "guide-me-now26"
           heroku_email: ${{secrets.HEROKU_DEPLOY_EMAIL}}
           branch: "dev"
           procfile: "web: cd apps/server && pnpm run start"
           buildpack: "https://github.com/unfold/heroku-buildpack-pnpm"
-          # dontuseforce: true
-          # usedocker: true
-          # docker_build_args: |
-          #   DATABASE_URL
-          #   JWT_SECRET
-        # env:
-        #   DATABASE_URL: ${{secrets.DATABASE_URL}}
-        #   JWT_SECRET: ${{secrets.JWT_SECRET}}
-        #   MAILGUN_API_KEY: ${{secrets.MAILGUN_API_KEY}}
+        env:
+          DATABASE_URL: ${{secrets.DATABASE_URL}}
+          JWT_SECRET: ${{secrets.JWT_SECRET}}
+          MAILGUN_API_KEY: ${{secrets.MAILGUN_API_KEY}}
 
