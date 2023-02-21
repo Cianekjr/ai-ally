@@ -15,13 +15,12 @@ interface NestedObject {
 
 @Injectable()
 export class MailerService {
-  private readonly client: Client;
+  private readonly client: Client | null;
 
   constructor() {
     if (!process.env.MAILGUN_API_KEY) {
-      throw new Error(
-        'Failed to initialize Mailjet client. Environment variables were not provided.',
-      );
+      this.client = null
+      return
     }
 
     const mailgun = new Mailgun(FormData);
@@ -48,6 +47,11 @@ export class MailerService {
     locales: NestedObject;
   }) {
     try {
+      if (!this.client) {
+
+        console.error('Mailjet client initialization failed - email not sent.')
+        return
+      }
       const mailPath = path.resolve(templatePath);
 
       const input = await readFile(mailPath, 'utf8');
