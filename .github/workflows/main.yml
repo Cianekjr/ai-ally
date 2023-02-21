@@ -8,6 +8,7 @@ on:
 env:
   DATABASE_URL: ${{secrets.DATABASE_URL}}
   JWT_SECRET: ${{secrets.JWT_SECRET}}
+  MAILGUN_API_KEY: ${{secrets.MAILGUN_API_KEY}}
 
 jobs:
   build:
@@ -27,7 +28,7 @@ jobs:
       - uses: akhileshns/heroku-deploy@v3.12.13
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-          heroku_app_name: "guide-me-now22"
+          heroku_app_name: "guide-me-now"
           heroku_email: ${{secrets.HEROKU_DEPLOY_EMAIL}}
           branch: "dev"
           procfile: "web: cd apps/server && pnpm run start"
