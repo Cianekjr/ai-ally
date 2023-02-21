@@ -9,6 +9,7 @@ env:
   DATABASE_URL: ${{secrets.DATABASE_URL}}
   JWT_SECRET: ${{secrets.JWT_SECRET}}
   MAILGUN_API_KEY: ${{secrets.MAILGUN_API_KEY}}
+  HEROKU_API_KEY: ${{secrets.HEROKU_API_KEY}}
 
 jobs:
   build:
@@ -28,7 +29,7 @@ jobs:
         run: turbo build
 
       - name: Pull
-        run: git pull heroku main --ff-only
+        run: git pull origin main --ff-only
       
       - uses: akhileshns/heroku-deploy@v3.12.13
         with:
@@ -38,6 +39,7 @@ jobs:
           # branch: "dev"
           procfile: "web: cd apps/server && pnpm run start"
         env:
+          HEROKU_API_KEY: ${{secrets.HEROKU_API_KEY}}
           DATABASE_URL: ${{secrets.DATABASE_URL}}
           JWT_SECRET: ${{secrets.JWT_SECRET}}
           MAILGUN_API_KEY: ${{secrets.MAILGUN_API_KEY}}
