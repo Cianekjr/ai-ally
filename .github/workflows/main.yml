@@ -26,6 +26,9 @@ jobs:
 
       - name: Build
         run: turbo build
+
+      - name: Pull
+        run: git pull
       
       - uses: akhileshns/heroku-deploy@v3.12.13
         with:
@@ -34,12 +37,8 @@ jobs:
           heroku_email: ${{secrets.HEROKU_DEPLOY_EMAIL}}
           branch: "dev"
           procfile: "web: cd apps/server && pnpm run start"
-          # buildpack: "https://github.com/unfold/heroku-buildpack-pnpm"
-          # justlogin: true
         env:
           DATABASE_URL: ${{secrets.DATABASE_URL}}
           JWT_SECRET: ${{secrets.JWT_SECRET}}
           MAILGUN_API_KEY: ${{secrets.MAILGUN_API_KEY}}
-      # - run: |
-      #     heroku container:login
 
