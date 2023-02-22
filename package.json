@@ -20,8 +20,5 @@
     "prettier": "latest",
     "turbo": "1.5.5"
   },
-  "engines": {
-    "node": "16.x"
-  },
   "packageManager": "pnpm@7.27.1"
 }
