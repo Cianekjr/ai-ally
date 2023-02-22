@@ -1,0 +1,27 @@
+name: Linting
+
+on:
+  push
+
+jobs:
+  linting:
+    name: Linting
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install pnpm
+        run: npm install pnpm --global
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Run lint
+        run: turbo lint
+      

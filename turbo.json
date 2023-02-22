@@ -1,7 +1,10 @@
 {
   "$schema": "https://turbo.build/schema.json",
   "globalDependencies": [
-    "**/.env.*local"
+    "**/.env",
+    ".env",
+    ".env.local",
+    "tsconfig.json"
   ],
   "pipeline": {
     "lint": {
@@ -21,6 +24,20 @@
       "outputs": [
         "dist/**",
         ".next/**"
+      ]
+    },
+    "build#server": {
+      "env": [
+        "PORT",
+        "JWT_SECRET",
+        "DATABASE_URL",
+        "MAILGUN_API_KEY"
+      ]
+    },
+    "build#client": {
+      "env": [
+        "PORT",
+        "APP_PUBLIC_URL"
       ]
     },
     "db:generate": {

@@ -1,3 +1,8 @@
-export default {
-  "extends": ["next/babel", "next/core-web-vitals", "turbo", "prettier"],
+module.exports = {
+  // "extends": ["turbo", "prettier"],
+  "extends": ["next", "turbo", "prettier"],
+  "parserOptions": {
+    "sourceType": "module",
+    ecmaVersion: 'latest',
+  }
 };

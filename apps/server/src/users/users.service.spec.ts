@@ -5,6 +5,7 @@ describe.skip('UsersService', () => {
   let service: UsersService;
 
   beforeEach(async () => {
+    // eslint-disable-next-line @next/next/no-assign-module-variable
     const module: TestingModule = await Test.createTestingModule({
       providers: [UsersService],
     }).compile();
