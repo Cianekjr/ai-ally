@@ -26,6 +26,7 @@ import { MailerModule } from './mailer/mailer.module';
         origin: true,
       },
       autoSchemaFile: true,
+      introspection: true,
       context: ({ req, res }) => ({ req, res }),
     }),
     MailerModule,
