@@ -7,20 +7,29 @@ jobs:
   linting:
     name: Linting
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [16]
     steps:
-      - name: Install Node
-        uses: actions/setup-node@v3
-        with:
-          node-version: 16
-
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Install turbo and pnpm
-        run: npm install turbo --global && npm install pnpm --global
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 7
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'pnpm'
 
       - name: Install dependencies
         run: pnpm install
+
+      - name: Install turbo
+        run: npm install turbo --global
 
       - name: Run lint
         run: turbo lint
