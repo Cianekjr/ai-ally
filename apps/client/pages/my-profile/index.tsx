@@ -42,6 +42,7 @@ export const getServerSideProps: GetServerSideProps<MyProfilePageProps> = async 
       },
     }
   } catch (e) {
+    console.error(e)
     return {
       redirect: {
         destination: `${APP_ROUTES.SIGN_IN}?redirect=${APP_ROUTES.MY_PROFILE}`,
