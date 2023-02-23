@@ -1,0 +1,9 @@
+mutation activate (
+    $token: String!,
+  ) {
+  activate(input: {
+    token: $token,
+  }) {
+    status
+  }
+}

@@ -12,18 +12,19 @@
     },
     "dev": {
       "dependsOn": [
-        "^db:generate"
+        "^generate"
       ],
       "cache": false
     },
     "build": {
       "dependsOn": [
         "^build",
-        "^db:generate"
+        "^generate"
       ],
       "outputs": [
         "dist/**",
-        ".next/**"
+        ".next/**",
+        "!.next/cache/**"
       ]
     },
     "build#server": {
@@ -37,13 +38,14 @@
     "build#client": {
       "env": [
         "PORT",
-        "APP_PUBLIC_URL"
+        "APP_PUBLIC_URL",
+        "NEXT_PUBLIC_API_URL"
       ]
     },
-    "db:generate": {
+    "generate": {
       "cache": false
     },
-    "db:push": {
+    "push": {
       "cache": false
     }
   }

@@ -5,15 +5,16 @@ import { Request } from 'express';
 import { UserJwtPayload } from './interfaces/userPayload';
 import { UsersService } from 'src/users/users.service';
 import { User as UserType } from 'db';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class RefreshStrategy extends PassportStrategy(Strategy, 'refresh') {
-  constructor(private userService: UsersService) {
+  constructor(private userService: UsersService, private configService: ConfigService) {
     super({
       jwtFromRequest: ExtractJwt.fromExtractors([RefreshStrategy.extractJWT]),
       ignoreExpiration: true,
       passReqToCallback: true,
-      secretOrKey: process.env.JWT_SECRET,
+      secretOrKey: configService.get<string>('JWT_SECRET'),
     });
   }
 

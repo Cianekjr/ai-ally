@@ -1,5 +1,25 @@
 {
   "extends": "tsconfig/client.json",
+  "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "@components/*": [
+        "components/*"
+      ],
+      "@types": [
+        "types"
+      ],
+      "@theme/*": [
+        "theme/*"
+      ],
+      "@theme": [
+        "theme"
+      ],
+      "@integrations/*": [
+        "integrations/*"
+      ],
+    }
+  },
   "include": [
     "next-env.d.ts",
     "**/*.ts",

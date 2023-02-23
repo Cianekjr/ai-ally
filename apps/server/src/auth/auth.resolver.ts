@@ -134,12 +134,7 @@ export class AuthResolver {
   @UseGuards(JwtAuthGuard)
   @Query(() => UserModel)
   getProfile(@CurrentUser() user: UserJwtPayload) {
-    try {
-      console.log({ user });
-      return this.authService.getUserProfile(user);
-    } catch (e) {
-      // console.log('ERROR', { e });
-    }
+    return this.authService.getUserProfile(user);
   }
 
   @UseGuards(RefreshAuthGuard)

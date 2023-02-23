@@ -9,14 +9,19 @@ import { RefreshStrategy } from './refresh.strategy';
 import { AuthResolver } from './auth.resolver';
 import { SETTINGS } from 'src/common/consts';
 import { MailerService } from 'src/mailer/mailer.service';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
     UsersModule,
     PassportModule,
-    JwtModule.register({
-      secret: process.env.JWT_SECRET,
-      signOptions: { expiresIn: SETTINGS.JWT_EXPIRATION },
+    JwtModule.registerAsync({
+      imports: [ConfigModule],
+      useFactory: async (configService: ConfigService) => ({
+        secret: configService.get<string>('JWT_SECRET'),
+        signOptions: { expiresIn: SETTINGS.JWT_EXPIRATION },
+      }),
+      inject: [ConfigService],
     }),
   ],
   providers: [

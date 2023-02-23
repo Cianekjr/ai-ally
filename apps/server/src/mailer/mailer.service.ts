@@ -8,6 +8,7 @@ import path from 'path';
 import { readFile } from 'fs/promises';
 import handlebars from 'handlebars';
 import { APP_ROUTES } from './helpers/consts';
+import { ConfigService } from '@nestjs/config';
 
 interface NestedObject {
   [key: string]: string | NestedObject;
@@ -17,8 +18,9 @@ interface NestedObject {
 export class MailerService {
   private readonly client: Client | null;
 
-  constructor() {
-    if (!process.env.MAILGUN_API_KEY) {
+  constructor(private configService: ConfigService) {
+    const apiKey = configService.get<string>('MAILGUN_API_KEY')
+    if (!apiKey) {
       this.client = null
       return
     }
@@ -27,7 +29,7 @@ export class MailerService {
 
     this.client = mailgun.client({
       username: 'api',
-      key: process.env.MAILGUN_API_KEY,
+      key: apiKey,
     });
 
     if (!this.client) {
@@ -48,7 +50,6 @@ export class MailerService {
   }) {
     try {
       if (!this.client) {
-
         console.error('Mailjet client initialization failed - email not sent.')
         return
       }
@@ -87,7 +88,7 @@ export class MailerService {
       to,
       subject: 'Verify your new Infflu account',
       locales: {
-        confirmationLink: `${process.env.APP_PUBLIC_URL}${APP_ROUTES.ACTIVATE}${locales.confirmationToken}`,
+        confirmationLink: `${this.configService.get<string>('APP_PUBLIC_URL')}${APP_ROUTES.ACTIVATE}${locales.confirmationToken}`,
       },
     });
   }
@@ -104,7 +105,7 @@ export class MailerService {
       to,
       subject: 'Verify your new Infflu account',
       locales: {
-        forgotPasswordLink: `${process.env.APP_PUBLIC_URL}${APP_ROUTES.PASSWORD}${locales.forgotPasswordToken}`,
+        forgotPasswordLink: `${this.configService.get<string>('APP_PUBLIC_URL')}${APP_ROUTES.PASSWORD}${locales.forgotPasswordToken}`,
       },
     });
   }
