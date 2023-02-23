@@ -30,6 +30,7 @@ export const getServerSideProps: GetServerSideProps<MyProfilePageProps> = async 
   try {
     const { data } = await urqlClient.query<GetProfileQuery>(GetProfileDocument, {}, { fetchOptions: { headers: { cookie: req.headers.cookie ?? '' } } }).toPromise()
 
+    console.info(data)
     if (!data) {
       throw new Error('Internal error.')
     }

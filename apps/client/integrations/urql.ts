@@ -23,6 +23,7 @@ export const urqlClient = createClient({
     cacheExchange,
     errorExchange({
       onError: async (error, operation) => {
+        console.log(error, 'ERROR')
         if (error.message.includes(TOKEN_EXPIRED_MESSAGE)) {
           // Refresh token
           await urqlClient.query(RegenerateTokensDocument, {}, operation.context).toPromise()
