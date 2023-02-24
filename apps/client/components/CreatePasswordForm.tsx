@@ -1,8 +1,10 @@
+'use client'; 
+
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useCreatePasswordMutation } from '__generated__/graphql'
+import { useCreatePasswordMutation } from '__generated__/graphql.client'
 
-import * as z from 'zod'
+    import * as z from 'zod'
 
 import { TextField, Box, Typography, InputAdornment, IconButton } from '@mui/material'
 import { VisibilityOff as VisibilityOffIcon, Visibility as VisibilityIcon } from '@mui/icons-material'
@@ -11,7 +13,7 @@ import { toast } from 'react-toastify'
 import { CustomButton } from './CustomButton'
 import { useRouter } from 'next/router'
 
-const schema = z.object({
+  const schema = z.object({
   password: z.string().min(8),
   repeatedPassword: z.string(),
 }).refine((data) => data.password === data.repeatedPassword, {

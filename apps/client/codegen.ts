@@ -9,9 +9,16 @@ const config: CodegenConfig = {
   schema: process.env.NEXT_PUBLIC_API_URL,
   documents: ["./**/*.graphql"],
   generates: {
-    '__generated__/graphql.ts': {
+    '__generated__/graphql.client.ts': {
       config: {
         withHooks: true,
+        documentMode: "documentNode"
+      },
+      plugins: ["typescript", "typescript-operations", "typescript-urql"]
+    },
+    '__generated__/graphql.server.ts': {
+      config: {
+        withHooks: false,
         documentMode: "documentNode"
       },
       plugins: ["typescript", "typescript-operations", "typescript-urql"]

@@ -1,10 +1,12 @@
-import { createContext, FC, ReactNode, useEffect } from 'react'
+'use client'
+
+import { createContext, FC, ReactNode } from 'react'
 
 import { Box, BoxProps, Container } from '@mui/material'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
-import { useGetProfileQuery } from '__generated__/graphql'
+import { useGetProfileQuery } from '__generated__/graphql.client'
 
 import { Header } from 'components/Header'
 import { HEADER_HEIGHT } from 'utils/styles'
@@ -46,13 +48,8 @@ const Layout: FC<LayoutProps> = ({ children, boxProps }) => {
 
         <ToastContainer position="bottom-right" newestOnTop />
       </Box>
-      <Globals />
     </Context.Provider>
   )
-}
-
-const Globals: FC = () => {
-  return null
 }
 
 export default Layout

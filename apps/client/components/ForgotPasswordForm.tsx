@@ -1,6 +1,8 @@
+'use client';
+
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useForgotPasswordMutation } from '__generated__/graphql'
+import { useForgotPasswordMutation } from '__generated__/graphql.client'
 
 import * as z from 'zod'
 

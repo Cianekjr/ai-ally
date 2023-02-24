@@ -1,9 +1,10 @@
 import type { GetServerSideProps, NextPage } from 'next'
 import Head from 'next/head'
 import Layout from '@components/Layout'
-import { GetProfileDocument, GetProfileQuery } from '__generated__/graphql'
+import { GetProfileDocument, GetProfileQuery } from '__generated__/graphql.client'
 import { urqlClient } from 'integrations/urql'
 import { APP_ROUTES } from 'utils/routes'
+import { withUrqlClient } from 'next-urql'
 
 interface MyProfilePageProps {
   profile: GetProfileQuery['getProfile']
@@ -11,7 +12,7 @@ interface MyProfilePageProps {
 
 const MyProfileMage: NextPage<MyProfilePageProps> = ({ profile }) => {
   
-  return (
+    return (
     <div>
       <Head>
         <title>Profile</title>
@@ -53,4 +54,6 @@ export const getServerSideProps: GetServerSideProps<MyProfilePageProps> = async 
   }
 }
 
-export default MyProfileMage
+export default withUrqlClient(() => ({
+  url: process.env.NEXT_PUBLIC_API_URL as string,
+}))(MyProfileMage)

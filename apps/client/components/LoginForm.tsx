@@ -1,6 +1,8 @@
+'use client'; 
+
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useLoginUserMutation } from '__generated__/graphql'
+import { useLoginUserMutation } from '__generated__/graphql.client'
 
 import * as z from 'zod'
 
@@ -9,8 +11,8 @@ import { VisibilityOff as VisibilityOffIcon, Visibility as VisibilityIcon } from
 import { FC, useState } from 'react'
 import { toast } from 'react-toastify'
 import { APP_ROUTES } from 'utils/routes'
-import { useRouter } from 'next/router'
 import { CustomButton } from './CustomButton'
+import { useRouter } from 'next/navigation';
 
 const schema = z.object({
   email: z.string().min(1).email(),
@@ -62,62 +64,64 @@ export const LoginForm: FC = () => {
   }
 
   return (
-    <Box component="form" noValidate autoComplete="off" onSubmit={handleSubmit(onSubmit)} display="grid" gap={2}>
-      <Typography variant="h2">Log in</Typography>
-      <Box>
-        <TextField
-          required
-          id="input-email"
-          label="Email"
-          variant="outlined"
-          margin="dense"
-          fullWidth
-          type="email"
-          {...register('email')}
-          error={Boolean(errors.email)}
-          helperText={errors.email?.message}
-        />
-        <TextField
-          required
-          id="input-password"
-          label="Password"
-          variant="outlined"
-          margin="dense"
-          fullWidth
-          type={showPassword ? 'text' : 'password'}
-          {...register('password')}
-          error={Boolean(errors.password)}
-          helperText={errors.password?.message}
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="end">
-                <IconButton
-                  aria-label="toggle password visibility"
-                  onClick={toggleShowPassword}
-                  onMouseDown={(e) => {
-                    e.preventDefault()
-                  }}
-                  edge="end"
-                >
-                  {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
-                </IconButton>
-              </InputAdornment>
-            ),
-          }}
-        />
+    <Box maxWidth={500} mx="auto">
+      <Box component="form" noValidate autoComplete="off" onSubmit={handleSubmit(onSubmit)} display="grid" gap={2}>
+        <Typography variant="h2">Log in</Typography>
+        <Box>
+          <TextField
+            required
+            id="input-email"
+            label="Email"
+            variant="outlined"
+            margin="dense"
+            fullWidth
+            type="email"
+            {...register('email')}
+            error={Boolean(errors.email)}
+            helperText={errors.email?.message}
+          />
+          <TextField
+            required
+            id="input-password"
+            label="Password"
+            variant="outlined"
+            margin="dense"
+            fullWidth
+            type={showPassword ? 'text' : 'password'}
+            {...register('password')}
+            error={Boolean(errors.password)}
+            helperText={errors.password?.message}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={toggleShowPassword}
+                    onMouseDown={(e) => {
+                      e.preventDefault()
+                    }}
+                    edge="end"
+                  >
+                    {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+          />
+        </Box>
+
+        <CustomButton aria-label="forgot password" href={APP_ROUTES.FORGOT_PASSWORD}>Forgot your password?</CustomButton>
+
+        <CustomButton variant="contained" aria-label="log in" type="submit">
+            Log in
+        </CustomButton>
+
+        <Typography variant="subtitle1" align="center">or</Typography>
+
+        <CustomButton variant="outlined" aria-label="sign up" href={APP_ROUTES.SIGN_UP}>
+          Sign up
+        </CustomButton>
       </Box>
-
-      <CustomButton aria-label="forgot password" href={APP_ROUTES.FORGOT_PASSWORD}>Forgot your password?</CustomButton>
-
-      <CustomButton variant="contained" aria-label="log in" type="submit">
-          Log in
-      </CustomButton>
-
-      <Typography variant="subtitle1" align="center">or</Typography>
-
-      <CustomButton variant="outlined" aria-label="sign up" href={APP_ROUTES.SIGN_UP}>
-        Sign up
-      </CustomButton>
     </Box>
   )
 }

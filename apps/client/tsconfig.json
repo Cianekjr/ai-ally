@@ -17,12 +17,21 @@
       ],
       "@integrations/*": [
         "integrations/*"
-      ],
-    }
+      ]
+    },
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "types": [
+      "react/next"
+    ]
   },
   "include": [
     "next-env.d.ts",
     "**/*.ts",
-    "**/*.tsx"
-  ],
+    "**/*.tsx",
+    ".next/types/**/*.ts"
+  ]
 }

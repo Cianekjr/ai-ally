@@ -1,7 +1,8 @@
 const path = require('path')
 
 const withPWA = require('next-pwa')({
-  dest: 'public'
+  dest: 'public',
+  disable: process.env.NODE_ENV === 'development'
 })
 
 /** @type {import('next').NextConfig} */
@@ -13,6 +14,10 @@ const nextConfig = {
     config.resolve.alias["@types"] = path.resolve(__dirname, "./types")
     return config
   },
+  experimental: {
+    appDir: true,
+    typedRoutes: true
+  }
 }
 
 module.exports = withPWA(nextConfig)

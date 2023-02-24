@@ -1,3 +1,5 @@
+'use client';
+
 import Image from 'next/image'
 import NextLink from 'next/link'
 
@@ -5,18 +7,22 @@ import React, { FC, useContext, useEffect, useState } from 'react'
 
 import { Close as CloseIcon, Menu as MenuIcon, Explore as ExploreIcon, Logout as LogoutIcon } from '@mui/icons-material'
 import { ListItemIcon, MenuItem, MenuList, IconButton, Drawer, Box, Container, ListItemText, Divider, Avatar, Menu } from '@mui/material'
-import { useLogoutQuery } from '__generated__/graphql'
+import { useLogoutQuery } from '__generated__/graphql.client'
 import { toast } from 'react-toastify'
 import { HEADER_HEIGHT } from 'utils/styles'
 import { APP_ROUTES } from 'utils/routes'
 import { CustomButton } from './CustomButton'
-import { useUser } from 'hooks/useUser'
+// import { useUser } from 'hooks/useUser'
 
 export const Header: FC = () => {
   const [isDrawerOpen, setDrawerOpen] = useState(false)
   const [isScrolled, setScrolled] = useState(false)
 
-  const user = useUser()
+  // const user = useUser()
+  const user = {
+    isUserLoggedIn: false,
+    isFetched: true
+  }
 
   const [{ data, error }, reexecuteLogoutUser] = useLogoutQuery({ pause: true })
 

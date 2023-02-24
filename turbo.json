@@ -39,7 +39,8 @@
       "env": [
         "PORT",
         "APP_PUBLIC_URL",
-        "NEXT_PUBLIC_API_URL"
+        "NEXT_PUBLIC_API_URL",
+        "NODE_ENV"
       ]
     },
     "generate": {

@@ -1,6 +1,8 @@
+'use client'; 
+
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useRegisterUserMutation } from '__generated__/graphql'
+import { useRegisterUserMutation } from '__generated__/graphql.client'
 
 import * as z from 'zod'
 
@@ -70,88 +72,90 @@ export const RegisterForm: FC = () => {
   }
 
   return (
-    <Box component="form" noValidate autoComplete="off" onSubmit={handleSubmit(onSubmit)} display="grid" gap={1.5}>
-      <Typography variant="h2">Create account</Typography>
-      <Box>
-        <TextField
-          required
-          id="input-email"
-          label="Email"
-          variant="outlined"
-          margin="dense"
-          fullWidth
-          type="email"
-          {...register('email')}
-          error={Boolean(errors.email)}
-          helperText={errors.email?.message}
-        />
-        <TextField
-          required
-          id="input-password"
-          label="Password"
-          variant="outlined"
-          margin="dense"
-          fullWidth
-          type={showPassword ? 'text' : 'password'}
-          {...register('password')}
-          error={Boolean(errors.password)}
-          helperText={errors.password?.message}
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="end">
-                <IconButton
-                  aria-label="toggle password visibility"
-                  onClick={toggleShowPassword}
-                  onMouseDown={(e) => {
-                    e.preventDefault()
-                  }}
-                  edge="end"
-                >
-                  {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
-                </IconButton>
-              </InputAdornment>
-            ),
-          }}
-        />
-        <TextField
-          required
-          id="input-repeated-password"
-          label="Repeat password"
-          variant="outlined"
-          margin="dense"
-          fullWidth
-          type={showRepeatedPassword ? 'text' : 'password'}
-          {...register('repeatedPassword')}
-          error={Boolean(errors.repeatedPassword)}
-          helperText={errors.repeatedPassword?.message}
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="end">
-                <IconButton
-                  aria-label="toggle repeated password visibility"
-                  onClick={toggleRepeatedShowPassword}
-                  onMouseDown={(e) => {
-                    e.preventDefault()
-                  }}
-                  edge="end"
-                >
-                  {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
-                </IconButton>
-              </InputAdornment>
-            ),
-          }}
-        />
+    <Box maxWidth={500} mx="auto">
+      <Box component="form" noValidate autoComplete="off" onSubmit={handleSubmit(onSubmit)} display="grid" gap={1.5}>
+        <Typography variant="h2">Create account</Typography>
+        <Box>
+          <TextField
+            required
+            id="input-email"
+            label="Email"
+            variant="outlined"
+            margin="dense"
+            fullWidth
+            type="email"
+            {...register('email')}
+            error={Boolean(errors.email)}
+            helperText={errors.email?.message}
+          />
+          <TextField
+            required
+            id="input-password"
+            label="Password"
+            variant="outlined"
+            margin="dense"
+            fullWidth
+            type={showPassword ? 'text' : 'password'}
+            {...register('password')}
+            error={Boolean(errors.password)}
+            helperText={errors.password?.message}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={toggleShowPassword}
+                    onMouseDown={(e) => {
+                      e.preventDefault()
+                    }}
+                    edge="end"
+                  >
+                    {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+          />
+          <TextField
+            required
+            id="input-repeated-password"
+            label="Repeat password"
+            variant="outlined"
+            margin="dense"
+            fullWidth
+            type={showRepeatedPassword ? 'text' : 'password'}
+            {...register('repeatedPassword')}
+            error={Boolean(errors.repeatedPassword)}
+            helperText={errors.repeatedPassword?.message}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle repeated password visibility"
+                    onClick={toggleRepeatedShowPassword}
+                    onMouseDown={(e) => {
+                      e.preventDefault()
+                    }}
+                    edge="end"
+                  >
+                    {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+          />
+        </Box>
+
+        <CustomButton variant="contained" aria-label="sign up" type="submit">
+          Sign up
+        </CustomButton>
+
+        <Typography variant="subtitle1" align="center">or</Typography>
+
+        <CustomButton variant="outlined" aria-label="log in" href={APP_ROUTES.SIGN_IN}>
+          Log in
+        </CustomButton>
       </Box>
-
-      <CustomButton variant="contained" aria-label="sign up" type="submit">
-        Sign up
-      </CustomButton>
-
-      <Typography variant="subtitle1" align="center">or</Typography>
-
-      <CustomButton variant="outlined" aria-label="log in" href={APP_ROUTES.SIGN_IN}>
-        Log in
-      </CustomButton>
     </Box>
   )
 }

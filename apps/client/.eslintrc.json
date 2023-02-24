@@ -1,8 +1,10 @@
-module.exports = {
+{
   // "extends": ["turbo", "prettier"],
-  "extends": ["next", "turbo", "prettier"],
+  "extends": [
+    "next"
+  ],
   "parserOptions": {
     "sourceType": "module",
-    ecmaVersion: 'latest',
+    "ecmaVersion": "latest"
   }
-};
+}

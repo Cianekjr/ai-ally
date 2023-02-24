@@ -1,3 +1,5 @@
+'use client'
+
 import { Box, IconButton, Modal } from '@mui/material'
 import { FC, ReactElement } from 'react'
 import { Close as CloseIcon } from '@mui/icons-material'

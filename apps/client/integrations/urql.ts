@@ -1,7 +1,5 @@
 import { createClient, dedupExchange, cacheExchange, fetchExchange, errorExchange, ssrExchange } from 'urql'
-import { authExchange } from '@urql/exchange-auth';
-import { RegenerateTokensDocument, GetProfileDocument } from '__generated__/graphql'
-import { print } from 'graphql';
+import { RegenerateTokensDocument, RegenerateTokensQuery } from '__generated__/graphql.client'
 
 const TOKEN_EXPIRED_MESSAGE = 'Token expired'
 
@@ -23,13 +21,14 @@ export const urqlClient = createClient({
     cacheExchange,
     errorExchange({
       onError: async (error, operation) => {
-        console.log(error, 'ERROR')
         if (error.message.includes(TOKEN_EXPIRED_MESSAGE)) {
           // Refresh token
-          await urqlClient.query(RegenerateTokensDocument, {}, operation.context).toPromise()
+          const { data } = await urqlClient.query<RegenerateTokensQuery>(RegenerateTokensDocument, {}, operation.context).toPromise()
 
-          // Reexecute the operation
-          urqlClient.reexecuteOperation(operation)
+          if (data?.regenerateTokens === 'ok') {
+            // Reexecute the operation
+            urqlClient.reexecuteOperation(operation)
+          }
         }
       },
     }),
