@@ -54,6 +54,7 @@ jobs:
         env:
           HD_DATABASE_URL: ${{secrets.DATABASE_URL}}
           HD_JWT_SECRET: ${{secrets.JWT_SECRET}}
+          HD_CLIENT_URL: https://guide-me-now-client-production.herokuapp.com
           # HD_MAILGUN_API_KEY: ${{secrets.MAILGUN_API_KEY}}
           HD_NODE_MODULES_CACHE: false
           HD_USE_YARN_CACHE: false
