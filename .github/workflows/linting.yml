@@ -44,7 +44,7 @@ jobs:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: "guide-me-now30"
           heroku_email: ${{secrets.HEROKU_DEPLOY_EMAIL}}
-          procfile: "web: cd apps/server && pnpm run start:prod"
+          procfile: "web: turbo build --filter=server && cd apps/server && pnpm run start:prod"
           region: eu
           # rollbackonhealthcheckfailed: true
           buildpack: https://github.com/unfold/heroku-buildpack-pnpm
