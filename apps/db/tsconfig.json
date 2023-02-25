@@ -1,14 +1,8 @@
 {
-  // "extends": "tsconfig/server.json",
+  "extends": "tsconfig/server.json",
   "compilerOptions": {
-    "module": "commonjs",
-    "removeComments": true,
-    "allowSyntheticDefaultImports": false,
     "outDir": "./dist",
     "baseUrl": "./",
-    "strict": true,
-    "esModuleInterop": true,
-    "skipLibCheck": true,
     "lib": [
       "ES2021"
     ],
