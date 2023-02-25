@@ -27,7 +27,7 @@ export const urqlClient = createClient({
         if (error.message.includes(TOKEN_EXPIRED_MESSAGE)) {
           // Refresh token
           // console.log('REFRESH')
-          const { data, error } = await urqlClient.query<RegenerateTokensQuery>(RegenerateTokensDocument, {}, operation.context).toPromise()
+          const { data } = await urqlClient.query<RegenerateTokensQuery>(RegenerateTokensDocument, {}, operation.context).toPromise()
 
           // console.log('REFRESH TOKEN ERROR', error, data, operation)
 
