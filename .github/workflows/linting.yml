@@ -3,6 +3,9 @@ name: Linting
 on:
   push
 
+env:
+  CI: true
+
 jobs:
   linting:
     name: Linting
