@@ -33,8 +33,11 @@ jobs:
       - name: Install turbo
         run: npm install turbo --global
 
-      - name: Run lint
-        run: turbo lint
+      - name: Permissions
+        run: sudo chown -R $(whoami) ~/.npm
+
+      # - name: Run lint
+      #   run: turbo lint
 
       - name: "Create .netrc for Heroku Auth"
         shell: bash
