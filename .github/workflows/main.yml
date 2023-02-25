@@ -47,7 +47,7 @@ jobs:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: "guide-me-now-server-production"
           heroku_email: ${{secrets.HEROKU_DEPLOY_EMAIL}}
-          procfile: "web: turbo build --filter=server && cd apps/server && pnpm run start:prod"
+          procfile: "web: cd apps/server && pnpm run start:prod"
           region: eu
           rollbackonhealthcheckfailed: true
           buildpack: https://github.com/unfold/heroku-buildpack-pnpm
@@ -64,7 +64,7 @@ jobs:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: "guide-me-now-client-production"
           heroku_email: ${{secrets.HEROKU_DEPLOY_EMAIL}}
-          procfile: "web: turbo build --filter=client && cd apps/client && pnpm run start"
+          procfile: "web: cd apps/client && pnpm run start"
           region: eu
           rollbackonhealthcheckfailed: true
           buildpack: https://github.com/unfold/heroku-buildpack-pnpm

@@ -15,7 +15,7 @@ async function Page() {
   return (
     <div>
       <h1>My profile</h1>
-      <h2>Email: {data.getProfile.email}</h2>
+      <h3>Email: {data.getProfile.email}</h3>
     </div>
   )
 }
