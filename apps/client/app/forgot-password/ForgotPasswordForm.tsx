@@ -1,4 +1,4 @@
-'use client';
+'use client'
 
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -9,7 +9,7 @@ import * as z from 'zod'
 import { TextField, Box, Typography } from '@mui/material'
 import { FC } from 'react'
 import { toast } from 'react-toastify'
-import { CustomButton } from './CustomButton'
+import { CustomButton } from '../../components/CustomButton'
 
 const schema = z.object({
   email: z.string().min(1).email(),
@@ -49,25 +49,27 @@ export const ForgotPasswordForm: FC = () => {
   }
 
   return (
-    <Box component="form" noValidate autoComplete="off" onSubmit={handleSubmit(onSubmit)} display="grid" gap={1.5}>
-      <Typography variant="h2">Remind your password</Typography>
-      <Box>
-        <TextField
-          required
-          id="input-email"
-          label="Email"
-          variant="outlined"
-          margin="dense"
-          fullWidth
-          type="email"
-          {...register('email')}
-          error={Boolean(errors.email)}
-          helperText={errors.email?.message}
-        />
+    <Box maxWidth={500} mx="auto">
+      <Box component="form" noValidate autoComplete="off" onSubmit={handleSubmit(onSubmit)} display="grid" gap={1.5}>
+        <Typography variant="h2">Remind your password</Typography>
+        <Box>
+          <TextField
+            required
+            id="input-email"
+            label="Email"
+            variant="outlined"
+            margin="dense"
+            fullWidth
+            type="email"
+            {...register('email')}
+            error={Boolean(errors.email)}
+            helperText={errors.email?.message}
+          />
 
-        <CustomButton variant="contained" aria-label="sign up" type="submit">
-          Submit
-        </CustomButton>
+          <CustomButton variant="contained" aria-label="sign up" type="submit">
+            Submit
+          </CustomButton>
+        </Box>
       </Box>
     </Box>
   )

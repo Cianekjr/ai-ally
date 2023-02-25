@@ -1,54 +1,52 @@
-'use client'; 
+'use client'
 
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useRegisterUserMutation } from '__generated__/graphql.client'
+import { useCreatePasswordMutation } from '__generated__/graphql.client'
 
 import * as z from 'zod'
 
-import { TextField, Box, InputAdornment, IconButton, Typography, FormHelperText } from '@mui/material'
+import { TextField, Box, Typography, InputAdornment, IconButton } from '@mui/material'
 import { VisibilityOff as VisibilityOffIcon, Visibility as VisibilityIcon } from '@mui/icons-material'
 import { FC, useState } from 'react'
 import { toast } from 'react-toastify'
-import { APP_ROUTES } from 'utils/routes'
-import { CustomButton } from './CustomButton'
+import { CustomButton } from '../../../components/CustomButton'
+import { useRouter } from 'next/router'
 
-const schema = z.object({
-  email: z.string().min(1).email(),
-  password: z.string().min(8),
-  repeatedPassword: z.string(),
-}).refine((data) => data.password === data.repeatedPassword, {
-  message: "Passwords don't match",
-  path: ['repeatedPassword'],
-})
+const schema = z
+  .object({
+    password: z.string().min(8),
+    repeatedPassword: z.string(),
+  })
+  .refine((data) => data.password === data.repeatedPassword, {
+    message: "Passwords don't match",
+    path: ['repeatedPassword'],
+  })
 
 type SchemaType = z.infer<typeof schema>
 
-export const RegisterForm: FC = () => {
+export const CreatePasswordForm: FC = () => {
+  const router = useRouter()
+  const [, createPasswordMutation] = useCreatePasswordMutation()
+
   const [showPassword, setShowPassword] = useState(false)
   const [showRepeatedPassword, setShowRepeatedPassword] = useState(false)
 
   const toggleShowPassword = (): void => {
-    setShowPassword(value => !value)
+    setShowPassword((value) => !value)
   }
 
   const toggleRepeatedShowPassword = (): void => {
-    setShowRepeatedPassword(value => !value)
+    setShowRepeatedPassword((value) => !value)
   }
-
-  const [, registerUserMutation] = useRegisterUserMutation()
 
   const {
     register,
     formState: { errors },
     handleSubmit,
-    setValue,
-    watch,
     reset,
-    trigger,
   } = useForm<SchemaType>({
     defaultValues: {
-      email: '',
       password: '',
       repeatedPassword: '',
     },
@@ -58,14 +56,19 @@ export const RegisterForm: FC = () => {
 
   const onSubmit: SubmitHandler<SchemaType> = async (data) => {
     try {
-      const { error } = await registerUserMutation(data)
+      const formData = {
+        password: data.password,
+        forgotPasswordToken: typeof router.query.token === 'string' ? router.query.token : '',
+      }
+
+      const { error } = await createPasswordMutation(formData)
 
       if (error) {
         toast.error(error.message)
         return
       }
       reset()
-      toast.success('You have been registered successfully. Check your email.')
+      toast.success('Your password has been reset. You can sign in.')
     } catch {
       toast.error('Something went wrong')
     }
@@ -74,24 +77,12 @@ export const RegisterForm: FC = () => {
   return (
     <Box maxWidth={500} mx="auto">
       <Box component="form" noValidate autoComplete="off" onSubmit={handleSubmit(onSubmit)} display="grid" gap={1.5}>
-        <Typography variant="h2">Create account</Typography>
+        <Typography variant="h2">Create new password</Typography>
         <Box>
           <TextField
             required
-            id="input-email"
-            label="Email"
-            variant="outlined"
-            margin="dense"
-            fullWidth
-            type="email"
-            {...register('email')}
-            error={Boolean(errors.email)}
-            helperText={errors.email?.message}
-          />
-          <TextField
-            required
             id="input-password"
-            label="Password"
+            label="New password"
             variant="outlined"
             margin="dense"
             fullWidth
@@ -119,7 +110,7 @@ export const RegisterForm: FC = () => {
           <TextField
             required
             id="input-repeated-password"
-            label="Repeat password"
+            label="Repeat new password"
             variant="outlined"
             margin="dense"
             fullWidth
@@ -147,13 +138,7 @@ export const RegisterForm: FC = () => {
         </Box>
 
         <CustomButton variant="contained" aria-label="sign up" type="submit">
-          Sign up
-        </CustomButton>
-
-        <Typography variant="subtitle1" align="center">or</Typography>
-
-        <CustomButton variant="outlined" aria-label="log in" href={APP_ROUTES.SIGN_IN}>
-          Log in
+          Submit
         </CustomButton>
       </Box>
     </Box>

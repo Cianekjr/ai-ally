@@ -49,3 +49,5 @@ __generated__
 /public/workbox-*.js.map
 /public/worker-*.js.map
 /public/fallback-*.js
+
+.vscode

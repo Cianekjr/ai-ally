@@ -1,3 +1,3 @@
 export const SETTINGS = {
-  JWT_EXPIRATION: '20s',
-};
+  JWT_EXPIRATION: '60s',
+}

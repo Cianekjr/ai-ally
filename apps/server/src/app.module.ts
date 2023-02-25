@@ -1,11 +1,11 @@
-import { Module } from '@nestjs/common';
-import { UsersModule } from './users/users.module';
-import { ConfigModule } from '@nestjs/config';
-import { GraphQLModule } from '@nestjs/graphql';
-import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
-import { PrismaModule } from './prisma/prisma.module';
-import { AuthModule } from './auth/auth.module';
-import { MailerModule } from './mailer/mailer.module';
+import { Module } from '@nestjs/common'
+import { UsersModule } from './users/users.module'
+import { ConfigModule } from '@nestjs/config'
+import { GraphQLModule } from '@nestjs/graphql'
+import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo'
+import { PrismaModule } from './prisma/prisma.module'
+import { AuthModule } from './auth/auth.module'
+import { MailerModule } from './mailer/mailer.module'
 
 @Module({
   imports: [
@@ -32,4 +32,4 @@ import { MailerModule } from './mailer/mailer.module';
     MailerModule,
   ],
 })
-export class AppModule { }
+export class AppModule {}

@@ -33,4 +33,30 @@ jobs:
 
       - name: Run lint
         run: turbo lint
+
+      - name: "Create .netrc for Heroku Auth"
+        shell: bash
+        run: |
+          `cat ≶~/.netrc <<EOF
+          machine api.heroku.com
+              login $EMAIL
+              password $HEROKU_AUTH_TOKEN
+          machine git.heroku.com
+              login $EMAIL
+              password $HEROKU_AUTH_TOKEN
+          EOF`
+        env:
+          EMAIL: ${{secrets.HEROKU_DEPLOY_EMAIL}}
+          HEROKU_AUTH_TOKEN: ${{secrets.HEROKU_API_KEY}}
+
+      - name: "Add remote"
+        shell: "bash"
+        run: |
+          heroku git:remote --app gmn-test
+      
+      - name: "Push to heroku"
+        shell: "bash"
+        run: |
+          git push heroku HEAD:dev
+
       

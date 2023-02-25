@@ -10,6 +10,8 @@ interface CustomLinkProps extends LinkProps {
 
 export const CustomLink: FC<CustomLinkProps> = ({ children, ...props }) => {
   return (
-    <Link component={NextLink} {...props}>{children}</Link>
+    <Link component={NextLink} {...props}>
+      {children}
+    </Link>
   )
 }

@@ -1,9 +1,9 @@
-'use client';
+'use client'
 
 import Image from 'next/image'
 import NextLink from 'next/link'
 
-import React, { FC, useContext, useEffect, useState } from 'react'
+import React, { FC, MouseEvent, useEffect, useState } from 'react'
 
 import { Close as CloseIcon, Menu as MenuIcon, Explore as ExploreIcon, Logout as LogoutIcon } from '@mui/icons-material'
 import { ListItemIcon, MenuItem, MenuList, IconButton, Drawer, Box, Container, ListItemText, Divider, Avatar, Menu } from '@mui/material'
@@ -12,17 +12,13 @@ import { toast } from 'react-toastify'
 import { HEADER_HEIGHT } from 'utils/styles'
 import { APP_ROUTES } from 'utils/routes'
 import { CustomButton } from './CustomButton'
-// import { useUser } from 'hooks/useUser'
+import { useUser } from 'hooks/useUser'
 
 export const Header: FC = () => {
   const [isDrawerOpen, setDrawerOpen] = useState(false)
   const [isScrolled, setScrolled] = useState(false)
 
-  // const user = useUser()
-  const user = {
-    isUserLoggedIn: false,
-    isFetched: true
-  }
+  const user = useUser()
 
   const [{ data, error }, reexecuteLogoutUser] = useLogoutQuery({ pause: true })
 
@@ -37,10 +33,10 @@ export const Header: FC = () => {
     }
   }, [])
 
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const isMenuOpened = Boolean(anchorEl)
 
-  const openMenu = (event: React.MouseEvent<HTMLElement>): void => {
+  const openMenu = (event: MouseEvent<HTMLElement>): void => {
     setAnchorEl(event.currentTarget)
   }
   const closeMenu = (): void => {
@@ -68,38 +64,34 @@ export const Header: FC = () => {
 
   return (
     <Box
-      component="header" position="sticky" top="0"
+      component="header"
+      position="sticky"
+      top="0"
       height={HEADER_HEIGHT}
       sx={{
-        boxShadow: isScrolled
-          ? '"0 4px 18px 0px rgba(0, 0, 0, 0.12), 0 7px 10px -5px rgba(0, 0, 0, 0.15)"'
-          : '0 4px 18px 0px rgba(0, 0, 0, 0), 0 7px 10px -5px rgba(0, 0, 0, 0)',
+        boxShadow: isScrolled ? '"0 4px 18px 0px rgba(0, 0, 0, 0.12), 0 7px 10px -5px rgba(0, 0, 0, 0.15)"' : '0 4px 18px 0px rgba(0, 0, 0, 0), 0 7px 10px -5px rgba(0, 0, 0, 0)',
       }}
     >
       <Container>
         <Box display="grid" alignItems="center" gridTemplateColumns="auto 1fr auto">
-
           <NextLink href="/">
             <Image src="/logo.png" alt="logo" width={100} height={40} />
           </NextLink>
 
-          <Box
-            height="100%"
-            width="100%"
-          >
-          </Box>
+          <Box height="100%" width="100%"></Box>
 
-          <Box justifySelf="end" display="flex" alignItems="center" sx={{ visibility: user.isFetched ? 'visible' : 'hidden'}}>
-            {user.isUserLoggedIn
-              ? <IconButton onClick={openMenu}>
+          <Box justifySelf="end" display="flex" alignItems="center" sx={{ visibility: user.isFetched ? 'visible' : 'hidden' }}>
+            {user.isUserLoggedIn ? (
+              <IconButton onClick={openMenu}>
                 <Avatar variant="rounded" color="secondary" sx={{ bgcolor: 'text.primary' }} />
               </IconButton>
-              : <CustomButton sx={{ textTransform: 'uppercase' }} href={APP_ROUTES.SIGN_IN}>
-                  Sign in
+            ) : (
+              <CustomButton sx={{ textTransform: 'uppercase' }} href={APP_ROUTES.SIGN_IN}>
+                Sign in
               </CustomButton>
-            }
-            <Divider orientation="vertical" variant="middle" flexItem light/>
-            <IconButton aria-label="open drawer" onClick={handleDrawerToggle} >
+            )}
+            <Divider orientation="vertical" variant="middle" flexItem light />
+            <IconButton aria-label="open drawer" onClick={handleDrawerToggle}>
               <MenuIcon />
             </IconButton>
           </Box>
@@ -116,7 +108,7 @@ export const Header: FC = () => {
             }}
             onClose={handleDrawerToggle}
           >
-            <IconButton aria-label="close drawer" onClick={handleDrawerToggle} sx={{ alignSelf: 'end', m: 1 }} >
+            <IconButton aria-label="close drawer" onClick={handleDrawerToggle} sx={{ alignSelf: 'end', m: 1 }}>
               <CloseIcon />
             </IconButton>
 

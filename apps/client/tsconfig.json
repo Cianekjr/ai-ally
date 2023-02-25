@@ -19,13 +19,13 @@
         "integrations/*"
       ]
     },
+    "types": [
+      "react/next"
+    ],
     "plugins": [
       {
         "name": "next"
       }
-    ],
-    "types": [
-      "react/next"
     ]
   },
   "include": [

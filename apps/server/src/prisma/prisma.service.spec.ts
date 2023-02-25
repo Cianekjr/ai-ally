@@ -1,19 +1,19 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { PrismaService } from './prisma.service';
+import { Test, TestingModule } from '@nestjs/testing'
+import { PrismaService } from './prisma.service'
 
 describe('PrismaService', () => {
-  let service: PrismaService;
+  let service: PrismaService
 
   beforeEach(async () => {
     // eslint-disable-next-line @next/next/no-assign-module-variable
     const module: TestingModule = await Test.createTestingModule({
       providers: [PrismaService],
-    }).compile();
+    }).compile()
 
-    service = module.get<PrismaService>(PrismaService);
-  });
+    service = module.get<PrismaService>(PrismaService)
+  })
 
   it('should be defined', () => {
-    expect(service).toBeDefined();
-  });
-});
+    expect(service).toBeDefined()
+  })
+})

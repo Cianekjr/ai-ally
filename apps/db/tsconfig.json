@@ -4,6 +4,10 @@
     "outDir": "./dist",
     "baseUrl": "./",
   },
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+  ],
   "exclude": [
     "dist",
     "node_modules"

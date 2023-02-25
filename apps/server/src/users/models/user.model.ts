@@ -1,31 +1,31 @@
-import { Field, Int, ObjectType, registerEnumType } from '@nestjs/graphql';
+import { Field, Int, ObjectType } from '@nestjs/graphql'
 
 @ObjectType()
 export class UserModel {
   @Field(() => Int)
-  id: number;
+  id: number
 
   @Field()
-  email: string;
+  email: string
 
   @Field()
-  password: string;
+  password: string
 
   @Field({ nullable: true })
-  refreshToken?: string;
+  refreshToken?: string
 
   @Field({ nullable: true })
-  refreshTokenExp?: Date;
+  refreshTokenExp?: Date
 
   @Field({ nullable: true })
-  confirmationToken?: string;
+  confirmationToken?: string
 
   @Field({ nullable: true })
-  confirmationDate?: Date;
+  confirmationDate?: Date
 
   @Field({ nullable: true })
-  forgotPasswordToken?: string;
+  forgotPasswordToken?: string
 
   @Field({ nullable: true })
-  forgotPasswordDate?: Date;
+  forgotPasswordDate?: Date
 }

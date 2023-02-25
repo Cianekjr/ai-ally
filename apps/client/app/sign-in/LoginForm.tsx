@@ -1,4 +1,4 @@
-'use client'; 
+'use client'
 
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -11,8 +11,8 @@ import { VisibilityOff as VisibilityOffIcon, Visibility as VisibilityIcon } from
 import { FC, useState } from 'react'
 import { toast } from 'react-toastify'
 import { APP_ROUTES } from 'utils/routes'
-import { CustomButton } from './CustomButton'
-import { useRouter } from 'next/navigation';
+import { CustomButton } from '../../components/CustomButton'
+import { useRouter } from 'next/navigation'
 
 const schema = z.object({
   email: z.string().min(1).email(),
@@ -26,7 +26,7 @@ export const LoginForm: FC = () => {
   const router = useRouter()
 
   const toggleShowPassword = (): void => {
-    setShowPassword(value => !value)
+    setShowPassword((value) => !value)
   }
 
   const [, loginUserMutation] = useLoginUserMutation()
@@ -110,13 +110,17 @@ export const LoginForm: FC = () => {
           />
         </Box>
 
-        <CustomButton aria-label="forgot password" href={APP_ROUTES.FORGOT_PASSWORD}>Forgot your password?</CustomButton>
-
-        <CustomButton variant="contained" aria-label="log in" type="submit">
-            Log in
+        <CustomButton aria-label="forgot password" href={APP_ROUTES.FORGOT_PASSWORD}>
+          Forgot your password?
         </CustomButton>
 
-        <Typography variant="subtitle1" align="center">or</Typography>
+        <CustomButton variant="contained" aria-label="log in" type="submit">
+          Log in
+        </CustomButton>
+
+        <Typography variant="subtitle1" align="center">
+          or
+        </Typography>
 
         <CustomButton variant="outlined" aria-label="sign up" href={APP_ROUTES.SIGN_UP}>
           Sign up

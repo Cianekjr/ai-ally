@@ -1,5 +1,7 @@
 declare global {
-  interface Window { __URQL_DATA__: unknown }
+  interface Window {
+    __URQL_DATA__: unknown
+  }
 }
 
 window.__URQL_DATA__ = window.__URQL_DATA__ || {}

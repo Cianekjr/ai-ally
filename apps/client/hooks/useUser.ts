@@ -1,8 +1,8 @@
-import { Context } from "@components/Layout"
-import { useContext } from "react"
+import { UserContext } from 'app/Auth'
+import { useContext } from 'react'
 
 export const useUser = () => {
-  const user = useContext(Context)
+  const user = useContext(UserContext)
 
   return user
 }

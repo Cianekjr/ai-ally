@@ -1,4 +1,4 @@
-import { User as UserType } from 'db';
+import { User as UserType } from 'db'
 
 export const purgeUser = (user: UserType): UserType => {
   return {
@@ -10,5 +10,5 @@ export const purgeUser = (user: UserType): UserType => {
     confirmationDate: null,
     forgotPasswordToken: null,
     forgotPasswordDate: null,
-  };
-};
+  }
+}

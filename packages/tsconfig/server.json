@@ -15,7 +15,14 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
-    "strictPropertyInitialization": false,
-    "esModuleInterop": true
-  }
+    "esModuleInterop": true,
+    "strictPropertyInitialization": false
+  },
+  "include": [
+    "src",
+    "next-env.d.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

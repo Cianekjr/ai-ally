@@ -7,14 +7,16 @@
     "tsconfig.json"
   ],
   "pipeline": {
-    "lint": {
-      "outputs": []
-    },
+    "lint": {},
     "dev": {
       "dependsOn": [
         "^generate"
       ],
-      "cache": false
+      "cache": false,
+      "outputs": [
+        "dist/**",
+        "build/**"
+      ]
     },
     "build": {
       "dependsOn": [
@@ -33,6 +35,10 @@
         "JWT_SECRET",
         "DATABASE_URL",
         "MAILGUN_API_KEY"
+      ],
+      "outputs": [
+        "dist/**",
+        "build/**"
       ]
     },
     "build#client": {
@@ -41,13 +47,25 @@
         "APP_PUBLIC_URL",
         "NEXT_PUBLIC_API_URL",
         "NODE_ENV"
+      ],
+      "outputs": [
+        "dist/**",
+        "build/**"
       ]
     },
     "generate": {
-      "cache": false
+      "cache": false,
+      "outputs": [
+        "dist/**",
+        "build/**"
+      ]
     },
     "push": {
-      "cache": false
+      "cache": false,
+      "outputs": [
+        "dist/**",
+        "build/**"
+      ]
     }
   }
 }

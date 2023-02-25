@@ -1,19 +1,19 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { UsersService } from './users.service';
+import { Test, TestingModule } from '@nestjs/testing'
+import { UsersService } from './users.service'
 
 describe.skip('UsersService', () => {
-  let service: UsersService;
+  let service: UsersService
 
   beforeEach(async () => {
     // eslint-disable-next-line @next/next/no-assign-module-variable
     const module: TestingModule = await Test.createTestingModule({
       providers: [UsersService],
-    }).compile();
+    }).compile()
 
-    service = module.get<UsersService>(UsersService);
-  });
+    service = module.get<UsersService>(UsersService)
+  })
 
   it('should be defined', () => {
-    expect(service).toBeDefined();
-  });
-});
+    expect(service).toBeDefined()
+  })
+})

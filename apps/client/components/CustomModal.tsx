@@ -22,7 +22,7 @@ export const CustomModal: FC<CustomModalProps> = ({ isOpen, onClose, children, i
     >
       <Box bgcolor="background.paper" borderRadius={1} position="relative">
         {isCloseButton && (
-          <IconButton aria-label="close modal" onClick={onClose} sx={{ p: 1, position: 'absolute', right: 0, top: 0 }} >
+          <IconButton aria-label="close modal" onClick={onClose} sx={{ p: 1, position: 'absolute', right: 0, top: 0 }}>
             <CloseIcon />
           </IconButton>
         )}

@@ -1,10 +1,13 @@
 'use client'
 
+import { FC } from 'react'
+
 import { Box, Typography } from '@mui/material'
-import { APP_ROUTES } from 'utils/routes'
+
 import { ActivationStatus } from '__generated__/graphql.server'
 import { CustomLink } from '@components/CustomLink'
-import { FC } from 'react'
+
+import { APP_ROUTES } from 'utils/routes'
 
 interface ActivationViewProps {
   status: ActivationStatus

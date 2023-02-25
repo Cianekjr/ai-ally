@@ -1,120 +1,138 @@
-import { ForbiddenException, Injectable } from '@nestjs/common';
-import { UsersService } from 'src/users/users.service';
-import { JwtService } from '@nestjs/jwt';
-import { UserJwtPayload } from './interfaces/userPayload';
+import { ForbiddenException, Injectable } from '@nestjs/common'
+import { UsersService } from 'src/users/users.service'
+import { JwtService } from '@nestjs/jwt'
+import { UserJwtPayload } from './interfaces/userPayload'
 
-import { addWeeks, addDays } from 'date-fns';
-import { User as UserType, Prisma } from 'db';
-import { generateRandomToken, hashCompare, hashValue } from 'src/common/crypto';
+import { addWeeks, addDays, isBefore } from 'date-fns'
+import { User as UserType, Prisma } from 'db'
+import { generateRandomToken, hashCompare, hashValue } from 'src/common/crypto'
+import { purgeUser } from 'src/users/helpers/purgeUser'
 
 @Injectable()
 export class AuthService {
-  constructor(
-    private usersService: UsersService,
-    private jwtService: JwtService,
-  ) { }
+  constructor(private usersService: UsersService, private jwtService: JwtService) {}
 
   async validateUser(email: string, password: string): Promise<UserType> {
-    const user = await this.usersService.getFullUser({ email });
+    const user = await this.usersService.getFullUser({ email })
 
     if (!user) {
-      throw new ForbiddenException('User with followed email does not exist');
+      throw new ForbiddenException('User with followed email does not exist')
     }
-    const arePasswordsMatch = await hashCompare(password, user.password);
+    const arePasswordsMatch = await hashCompare(password, user.password)
     if (!arePasswordsMatch) {
-      throw new ForbiddenException('Incorrect password');
+      throw new ForbiddenException('Incorrect password')
     }
     return {
       ...user,
       password: '',
       refreshToken: '',
       refreshTokenExp: null,
-    };
+    }
   }
 
   async registerUser(user: Prisma.UserCreateInput): Promise<UserType> {
-    const hashedPassword = await hashValue(user.password);
+    const hashedPassword = await hashValue(user.password)
 
     try {
       const createdUser = await this.usersService.createUser({
         ...user,
         password: hashedPassword,
-      });
+      })
 
       return {
         ...createdUser,
         password: '',
         refreshToken: '',
         refreshTokenExp: null,
-      };
+      }
     } catch (e) {
-      if (
-        e instanceof Prisma.PrismaClientKnownRequestError &&
-        e.code === 'P2002'
-      ) {
+      if (e instanceof Prisma.PrismaClientKnownRequestError && e.code === 'P2002') {
         throw new ForbiddenException({
           message: 'This email is already registered',
           code: e.code,
-        });
+        })
       }
-      throw e;
+      throw e
     }
   }
 
   async getUserProfile(user: UserJwtPayload): Promise<UserType> {
-    const userData = await this.usersService.getUser({ id: user.sub });
+    const userData = await this.usersService.getUser({ id: user.sub })
 
     if (!userData) {
-      throw new ForbiddenException('JWT subject does not exist');
+      throw new ForbiddenException('JWT subject does not exist')
     }
 
-    return userData;
+    return userData
   }
 
   generateJwtToken(user: Pick<UserType, 'email' | 'id'>): string {
-    const payload: UserJwtPayload = { email: user.email, sub: user.id };
+    const payload: UserJwtPayload = { email: user.email, sub: user.id }
 
-    return this.jwtService.sign(payload);
+    return this.jwtService.sign(payload)
   }
 
-  async generateRefreshToken(
-    user: Pick<UserType, 'email' | 'id'>,
-  ): Promise<UserType['refreshToken']> {
+  async generateRefreshToken(user: Pick<UserType, 'email' | 'id'>): Promise<UserType['refreshToken']> {
     const userDataToUpdate = {
       refreshToken: generateRandomToken(),
       refreshTokenExp: addWeeks(new Date(), 1),
-    };
+    }
 
     await this.usersService.updateUser(
       {
         id: user.id,
       },
       userDataToUpdate,
-    );
-    return userDataToUpdate.refreshToken;
+    )
+    return userDataToUpdate.refreshToken
+  }
+
+  async validateRefreshToken(where: Prisma.UserWhereUniqueInput, refreshToken: UserType['refreshToken']): Promise<UserType> {
+    const user = await this.usersService.getFullUser(where)
+
+    if (!user) {
+      throw new ForbiddenException('User does not exist')
+    }
+
+    if (!user.refreshToken || !user.refreshTokenExp) {
+      throw new ForbiddenException('User has not refresh token')
+    }
+
+    if (user.refreshToken !== refreshToken) {
+      throw new ForbiddenException('Refresh token is invalid')
+    }
+
+    const refreshTokenExpirationDate = new Date(user.refreshTokenExp)
+    const currentDate = new Date()
+
+    if (isBefore(refreshTokenExpirationDate, currentDate)) {
+      throw new ForbiddenException('Refresh token is expired')
+    }
+
+    return purgeUser(user)
   }
 
   generateConfirmationToken(): {
-    confirmationToken: NonNullable<UserType['confirmationToken']>;
-    confirmationDate: NonNullable<UserType['confirmationDate']>;
+    confirmationToken: NonNullable<UserType['confirmationToken']>
+    confirmationDate: NonNullable<UserType['confirmationDate']>
   } {
     const confirmationData = {
       confirmationToken: generateRandomToken(),
       confirmationDate: addDays(new Date(), 2),
-    };
+    }
 
-    return confirmationData;
+    return confirmationData
   }
 
   generateForgotPasswordToken(): {
-    forgotPasswordToken: NonNullable<UserType['forgotPasswordToken']>;
-    forgotPasswordDate: NonNullable<UserType['forgotPasswordDate']>;
+    forgotPasswordToken: NonNullable<UserType['forgotPasswordToken']>
+    forgotPasswordDate: NonNullable<UserType['forgotPasswordDate']>
   } {
     const forgotPasswordData = {
       forgotPasswordToken: generateRandomToken(),
       forgotPasswordDate: addDays(new Date(), 2),
-    };
+    }
 
-    return forgotPasswordData;
+    return forgotPasswordData
   }
 }

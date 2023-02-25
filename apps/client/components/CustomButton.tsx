@@ -9,17 +9,11 @@ interface CustomButtonProps extends ButtonProps {
 }
 
 export const CustomButton: FC<CustomButtonProps> = ({ children, href, ...props }) => {
-  return href
-    ? (
-      <Link href={href}>
-        <Button {...props}>
-          {children}
-        </Button>
-      </Link>
-      )
-    : (
-        <Button {...props}>
-          {children}
-        </Button>
-      )
+  return href ? (
+    <Link href={href}>
+      <Button {...props}>{children}</Button>
+    </Link>
+  ) : (
+    <Button {...props}>{children}</Button>
+  )
 }

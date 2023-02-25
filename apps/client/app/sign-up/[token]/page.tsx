@@ -1,48 +1,16 @@
-import { urqlClient } from "@integrations/urql";
-import { withUrqlClient } from "next-urql";
-import { ActivateDocument } from "__generated__/graphql.server";
-import ActivationView from "./ActivationView";
+import { ActivateDocument, ActivateMutation } from '__generated__/graphql.server'
+import ActivationView from './ActivationView'
 
-import { initUrqlClient } from 'next-urql';
-import { print } from "graphql";
+import { urqlClient } from '@integrations/urql'
 
-// const client = initUrqlClient(
-//   {
-//     url: '/graphql',
-//   },
-//   true
-// );
+async function Page({ params }: { params: { token: string } }) {
+  const { data, error } = await urqlClient.mutation<ActivateMutation>(ActivateDocument, { token: params.token }).toPromise()
 
-        async function Page() {
-    const res = await fetch(process.env.NEXT_PUBLIC_API_URL as string, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      query: print(ActivateDocument),
-    }),
-    credentials: 'include'
-  })
+  if (error || !data?.activate.status) {
+    throw new Error(`Internal error. Status cannot be obtained. - ${error}`)
+  }
 
-const data = await res.json()
-console.log(data)
-
-  // const result = await urqlClient.mutation<ActivateMutation>(ActivateDocument, { token }).toPromise()
-  // const result = await urqlClient.mutation(ActivateDocument, { token }).toPromise()
-
-
-  // const result = await client?.mutation(ActivateDocument, { token }).toPromise();
-
-  // console.log(result)
-
-  // if (!result.data) {
-  //   throw new Error('Internal error. Status cannot be obtained.')
-  // }
-
-  // const status = result.data.activate.status
-
-  return <ActivationView status={"SUCCESS"} />
+  return <ActivationView status={data?.activate.status} />
 }
 
 export default Page
