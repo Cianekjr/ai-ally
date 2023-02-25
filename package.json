@@ -12,7 +12,7 @@
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "build:client": "turbo build --filter=client",
-    "build:server": "npm i -g turbo && turbo build --filter=server --force --output-logs=full",
+    "build:server": "npx turbo build --filter=server --force --output-logs=full",
     "heroku-postbuild": "if [ $CLIENT_ENV ]; then pnpm build:client; elif [ $SERVER_ENV ]; then pnpm build:server; else echo no environment detected, please set CLIENT_ENV or SERVER_ENV; fi"
   },
   "devDependencies": {
