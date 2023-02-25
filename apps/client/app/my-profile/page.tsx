@@ -8,7 +8,9 @@ export const revalidate = 0
 async function Page() {
   const cookiesList = headers().get('cookie')
 
+  console.log(cookiesList)
   const { data, error } = await urqlClient.query<GetProfileQuery>(GetProfileDocument, {}, { fetchOptions: { headers: { cookie: cookiesList || '' } } }).toPromise()
+  console.log(data, error)
 
   if (error || !data?.getProfile) {
     throw new Error(`Internal error. Status cannot be obtained. - ${error}`)
