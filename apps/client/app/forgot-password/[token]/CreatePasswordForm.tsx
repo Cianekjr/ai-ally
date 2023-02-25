@@ -11,7 +11,7 @@ import { VisibilityOff as VisibilityOffIcon, Visibility as VisibilityIcon } from
 import { FC, useState } from 'react'
 import { toast } from 'react-toastify'
 import { CustomButton } from '../../../components/CustomButton'
-import { useRouter } from 'next/router'
+import { useSearchParams } from 'next/navigation'
 
 const schema = z
   .object({
@@ -26,7 +26,7 @@ const schema = z
 type SchemaType = z.infer<typeof schema>
 
 export const CreatePasswordForm: FC = () => {
-  const router = useRouter()
+  const params = useSearchParams()
   const [, createPasswordMutation] = useCreatePasswordMutation()
 
   const [showPassword, setShowPassword] = useState(false)
@@ -58,7 +58,7 @@ export const CreatePasswordForm: FC = () => {
     try {
       const formData = {
         password: data.password,
-        forgotPasswordToken: typeof router.query.token === 'string' ? router.query.token : '',
+        forgotPasswordToken: params.get('token') || '',
       }
 
       const { error } = await createPasswordMutation(formData)

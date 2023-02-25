@@ -7,13 +7,13 @@
     "packages/*"
   ],
   "scripts": {
-    "build": "turbo run build",
-    "dev": "turbo run dev",
-    "lint": "turbo run lint",
+    "build": "turbo build",
+    "dev": "turbo dev",
+    "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "build:client": "turbo run build --filter=client",
-    "build:server": "turbo run build --filter=server",
-    "heroku-postbuild": "if [ $CLIENT_ENV ]; then pnpm run build:client; elif [ $SERVER_ENV ]; then pnpm run build:server; else echo no environment detected, please set CLIENT_ENV or SERVER_ENV; fi"
+    "build:client": "turbo build --filter=client",
+    "build:server": "turbo build --filter=server",
+    "heroku-postbuild": "if [ $CLIENT_ENV ]; then pnpm build:client; elif [ $SERVER_ENV ]; then pnpm build:server; else echo no environment detected, please set CLIENT_ENV or SERVER_ENV; fi"
   },
   "devDependencies": {
     "eslint-config-custom": "workspace:*",

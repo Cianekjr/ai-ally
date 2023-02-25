@@ -3,6 +3,8 @@ import ActivationView from './ActivationView'
 
 import { urqlClient } from '@integrations/urql'
 
+export const revalidate = 0
+
 async function Page({ params }: { params: { token: string } }) {
   const { data, error } = await urqlClient.mutation<ActivateMutation>(ActivateDocument, { token: params.token }).toPromise()
 
