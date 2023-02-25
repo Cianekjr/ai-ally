@@ -31,9 +31,6 @@ jobs:
       - name: Install turbo
         run: npm install turbo --global
 
-      - name: Run build
-        run: turbo build
-
       - name: Run lint
         run: turbo lint
 

@@ -35,9 +35,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 
-# auto generated
-__generated__
-
 # next-pwa
 /public/precache.*.*.js
 /public/sw.js
