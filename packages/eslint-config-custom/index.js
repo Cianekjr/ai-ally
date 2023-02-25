@@ -54,7 +54,7 @@ module.exports = {
             alwaysTryTypes: true,
           },
         },
-        // 'import/core-modules': ['db'],
+        'import/core-modules': ['db'],
       },
     },
   ],
