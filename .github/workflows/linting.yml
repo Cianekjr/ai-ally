@@ -36,31 +36,45 @@ jobs:
       # - name: Run lint
       #   run: turbo lint
 
-      - name: "Create .netrc for Heroku Auth"
-        shell: bash
-        run: |
-          `cat >~/.netrc <<EOF
-          machine api.heroku.com
-              login $EMAIL
-              password $HEROKU_AUTH_TOKEN
-          machine git.heroku.com
-              login $EMAIL
-              password $HEROKU_AUTH_TOKEN
-          EOF`
+      - uses: akhileshns/heroku-deploy@v3.12.13
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: "guide-me-now30"
+          heroku_email: ${{secrets.HEROKU_DEPLOY_EMAIL}}
+          procfile: "web: cd apps/server && pnpm run start"
+          region: eu
+          # rollbackonhealthcheckfailed: true
+          buildpack: https://github.com/unfold/heroku-buildpack-pnpm
         env:
-          EMAIL: ${{secrets.HEROKU_DEPLOY_EMAIL}}
-          HEROKU_AUTH_TOKEN: ${{secrets.HEROKU_API_KEY}}
+          HD_DATABASE_URL: ${{secrets.DATABASE_URL}}
+          HD_JWT_SECRET: ${{secrets.JWT_SECRET}}
+          # HD_MAILGUN_API_KEY: ${{secrets.MAILGUN_API_KEY}}
 
-      - name: "Add remote"
-        shell: "bash"
-        run: |
-          heroku git:remote --app gmn-test
+      # - name: "Create .netrc for Heroku Auth"
+      #   shell: bash
+      #   run: |
+      #     `cat >~/.netrc <<EOF
+      #     machine api.heroku.com
+      #         login $EMAIL
+      #         password $HEROKU_AUTH_TOKEN
+      #     machine git.heroku.com
+      #         login $EMAIL
+      #         password $HEROKU_AUTH_TOKEN
+      #     EOF`
+      #   env:
+      #     EMAIL: ${{secrets.HEROKU_DEPLOY_EMAIL}}
+      #     HEROKU_AUTH_TOKEN: ${{secrets.HEROKU_API_KEY}}
+
+      # - name: "Add remote"
+      #   shell: "bash"
+      #   run: |
+      #     heroku git:remote --app gmn-test
       
-      - name: "Push to heroku"
-        shell: "bash"
-        run: |
-          git push heroku HEAD:main
-        env:
-          RUST_BACKTRACE: 1
+      # - name: "Push to heroku"
+      #   shell: "bash"
+      #   run: |
+      #     git push heroku HEAD:main
+      #   env:
+      #     RUST_BACKTRACE: 1
 
       
