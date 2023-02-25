@@ -12,6 +12,9 @@
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
+  "engines": {
+    "node": ">=16.0.0"
+  },
   "devDependencies": {
     "eslint-config-custom": "workspace:*",
     "prettier": "2.8.4",
