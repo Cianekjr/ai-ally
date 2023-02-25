@@ -31,7 +31,7 @@ jobs:
         run: pnpm install
 
       - name: Install turbo
-        run: npm install turbo --global
+        run: npm install -g turbo
 
       - name: Permissions
         run: sudo chown -R $(whoami) ~/.npm
