@@ -1,7 +1,9 @@
 name: Linting
 
 on:
-  push
+  push:
+    branches:
+      - dev
 
 env:
   CI: true
@@ -36,49 +38,34 @@ jobs:
       - name: Install turbo
         run: npm install -g turbo
 
-      # - name: Run lint
-      #   run: turbo lint
+      - name: Run lint
+        run: turbo lint
 
-      - uses: akhileshns/heroku-deploy@v3.12.13
+      - name: Deploy server
+        uses: akhileshns/heroku-deploy@v3.12.13
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-          heroku_app_name: "guide-me-now30"
+          heroku_app_name: "guide-me-now-server-production"
           heroku_email: ${{secrets.HEROKU_DEPLOY_EMAIL}}
           procfile: "web: turbo build --filter=server && cd apps/server && pnpm run start:prod"
           region: eu
-          # rollbackonhealthcheckfailed: true
+          rollbackonhealthcheckfailed: true
           buildpack: https://github.com/unfold/heroku-buildpack-pnpm
         env:
           HD_DATABASE_URL: ${{secrets.DATABASE_URL}}
           HD_JWT_SECRET: ${{secrets.JWT_SECRET}}
-          HD_SERVER_END: true
           # HD_MAILGUN_API_KEY: ${{secrets.MAILGUN_API_KEY}}
 
-      # - name: "Create .netrc for Heroku Auth"
-      #   shell: bash
-      #   run: |
-      #     `cat >~/.netrc <<EOF
-      #     machine api.heroku.com
-      #         login $EMAIL
-      #         password $HEROKU_AUTH_TOKEN
-      #     machine git.heroku.com
-      #         login $EMAIL
-      #         password $HEROKU_AUTH_TOKEN
-      #     EOF`
-      #   env:
-      #     EMAIL: ${{secrets.HEROKU_DEPLOY_EMAIL}}
-      #     HEROKU_AUTH_TOKEN: ${{secrets.HEROKU_API_KEY}}
-
-      # - name: "Add remote"
-      #   shell: "bash"
-      #   run: |
-      #     heroku git:remote --app gmn-test
-      
-      # - name: "Push to heroku"
-      #   shell: "bash"
-      #   run: |
-      #     git push heroku HEAD:main
-      #   env:
-      #     RUST_BACKTRACE: 1
-
-      
+      - name: Deploy client
+        uses: akhileshns/heroku-deploy@v3.12.13
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: "guide-me-now-client-production"
+          heroku_email: ${{secrets.HEROKU_DEPLOY_EMAIL}}
+          procfile: "web: turbo build --filter=client && cd apps/client && pnpm run start"
+          region: eu
+          rollbackonhealthcheckfailed: true
+          buildpack: https://github.com/unfold/heroku-buildpack-pnpm
+        env:
+          HD_APP_PUBLIC_URL: https://guide-me-now-client-production.herokuapp.com
+          HD_NEXT_PUBLIC_API_URL: https://guide-me-now-server-production.herokuapp.com/graphql

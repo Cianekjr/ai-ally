@@ -3,12 +3,6 @@
   "compilerOptions": {
     "outDir": "./dist",
     "baseUrl": "./",
-    "lib": [
-      "ES2021"
-    ],
-    "target": "ES2021",
-    "isolatedModules": true,
-    "moduleResolution": "node",
   },
   "include": [
     "**/*.ts",
