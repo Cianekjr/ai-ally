@@ -3,6 +3,8 @@ import { GetProfileDocument, GetProfileQuery } from '__generated__/graphql.serve
 
 import { urqlClient } from '@integrations/urql'
 
+export const revalidate = 0
+
 async function Page() {
   const cookiesList = headers().get('cookie')
 
