@@ -43,7 +43,7 @@ module.exports = {
       extends: ['plugin:@typescript-eslint/recommended'],
       rules: {
         'react/react-in-jsx-scope': 'off',
-        'import/ignore': 'off',
+        // 'import/ignore': 'off',
       },
       settings: {
         'import/parsers': {
@@ -54,7 +54,7 @@ module.exports = {
             alwaysTryTypes: true,
           },
         },
-        'import/core-modules': ['db'],
+        // 'import/core-modules': ['db'],
       },
     },
   ],

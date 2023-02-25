@@ -3,6 +3,7 @@
   "compilerOptions": {
     "outDir": "./dist",
     "baseUrl": "./",
+    "esModuleInterop": false,
   },
   "include": [
     "**/*.ts",
