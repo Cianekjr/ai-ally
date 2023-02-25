@@ -60,5 +60,7 @@ jobs:
         shell: "bash"
         run: |
           git push heroku HEAD:main
+        env:
+          RUST_BACKTRACE: 1
 
       
