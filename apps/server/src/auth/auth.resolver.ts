@@ -103,7 +103,6 @@ export class AuthResolver {
       httpOnly: true,
       secure: true,
       sameSite: 'none',
-      domain: 'https://guide-me-now-client-production.herokuapp.com',
     })
 
     return userData
@@ -144,7 +143,6 @@ export class AuthResolver {
       httpOnly: true,
       secure: true,
       sameSite: 'none',
-      domain: 'https://guide-me-now-client-production.herokuapp.com',
     })
     return 'ok'
   }

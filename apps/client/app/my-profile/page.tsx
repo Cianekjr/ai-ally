@@ -6,9 +6,10 @@ import { urqlClient } from '@integrations/urql'
 export const revalidate = 0
 
 async function Page() {
+  const headersList = headers()
   const cookiesList = headers().get('cookie')
 
-  console.info(cookiesList)
+  console.info(headersList, cookiesList)
   const { data, error } = await urqlClient.query<GetProfileQuery>(GetProfileDocument, {}, { fetchOptions: { headers: { cookie: cookiesList || '' } } }).toPromise()
   console.info(data, error)
 
