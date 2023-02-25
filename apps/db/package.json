@@ -11,7 +11,7 @@
     "push": "prisma db push --skip-generate"
   },
   "engines": {
-    "node": ">=16.0.0"
+    "node": ">=16.8.0"
   },
   "dependencies": {
     "@prisma/client": "^4.10.1",
