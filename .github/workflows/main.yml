@@ -55,6 +55,8 @@ jobs:
           HD_DATABASE_URL: ${{secrets.DATABASE_URL}}
           HD_JWT_SECRET: ${{secrets.JWT_SECRET}}
           # HD_MAILGUN_API_KEY: ${{secrets.MAILGUN_API_KEY}}
+          HD_NODE_MODULES_CACHE: false
+          HD_USE_YARN_CACHE: false
 
       - name: Deploy client
         uses: akhileshns/heroku-deploy@v3.12.13
@@ -69,3 +71,5 @@ jobs:
         env:
           HD_APP_PUBLIC_URL: https://guide-me-now-client-production.herokuapp.com
           HD_NEXT_PUBLIC_API_URL: https://guide-me-now-server-production.herokuapp.com/graphql
+          HD_NODE_MODULES_CACHE: false
+          HD_USE_YARN_CACHE: false
