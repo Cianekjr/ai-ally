@@ -20,10 +20,11 @@ import { isAfter } from 'date-fns'
 import { ForgotPasswordInput } from './models/forgotPassword.input'
 import { CreatePasswordInput } from './models/createPassword.input'
 import { hashValue } from 'src/common/crypto'
+import { ConfigService } from '@nestjs/config'
 
 @Resolver(() => UserModel)
 export class AuthResolver {
-  constructor(private authService: AuthService, private usersService: UsersService, private mailerService: MailerService) {}
+  constructor(private authService: AuthService, private usersService: UsersService, private mailerService: MailerService, private configService: ConfigService) {}
 
   @Mutation(() => UserModel)
   async register(@Args('input') data: UserRegisterInput) {
@@ -103,6 +104,7 @@ export class AuthResolver {
       httpOnly: true,
       secure: true,
       sameSite: 'none',
+      domain: this.configService.get<string>('DOMAIN_URL'),
     })
 
     return userData
@@ -143,6 +145,7 @@ export class AuthResolver {
       httpOnly: true,
       secure: true,
       sameSite: 'none',
+      domain: this.configService.get<string>('DOMAIN_URL'),
     })
     return 'ok'
   }

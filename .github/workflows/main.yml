@@ -55,8 +55,8 @@ jobs:
         env:
           HD_DATABASE_URL: ${{secrets.DATABASE_URL}}
           HD_JWT_SECRET: ${{secrets.JWT_SECRET}}
-          HD_CLIENT_URL: ${{secrets.APP_PUBLIC_URL}}
           HD_DISCORD_TOKEN: ${{secrets.DISCORD_TOKEN}}
+          HD_DOMAIN_URL: ${{secrets.DOMAIN_URL}}
           # HD_MAILGUN_API_KEY: ${{secrets.MAILGUN_API_KEY}}
           HD_NODE_MODULES_CACHE: false
           HD_USE_YARN_CACHE: false
