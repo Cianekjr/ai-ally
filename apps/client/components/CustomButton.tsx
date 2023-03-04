@@ -1,14 +1,16 @@
 'use client'
 
 import { Button, ButtonProps } from '@mui/material'
+import type { Route } from 'next'
 import Link from 'next/link'
-import { FC, ReactNode } from 'react'
+import { ReactNode } from 'react'
 
-interface CustomButtonProps extends ButtonProps {
+type CustomButtonProps<T extends string> = Omit<ButtonProps, 'href'> & {
   children: ReactNode
+  href?: Route<T> | URL
 }
 
-export const CustomButton: FC<CustomButtonProps> = ({ children, href, ...props }) => {
+export const CustomButton = <T extends string>({ children, href, ...props }: CustomButtonProps<T>) => {
   return href ? (
     <Link href={href}>
       <Button {...props}>{children}</Button>

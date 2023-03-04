@@ -5,20 +5,20 @@ import NextLink from 'next/link'
 
 import React, { FC, MouseEvent, useEffect, useState } from 'react'
 
-import { Close as CloseIcon, Menu as MenuIcon, Explore as ExploreIcon, Logout as LogoutIcon } from '@mui/icons-material'
-import { ListItemIcon, MenuItem, MenuList, IconButton, Drawer, Box, Container, ListItemText, Divider, Avatar, Menu } from '@mui/material'
+import { Close as CloseIcon, Menu as MenuIcon, Logout as LogoutIcon } from '@mui/icons-material'
+import { ListItemIcon, MenuItem, IconButton, Drawer, Box, Container, ListItemText, Divider, Avatar, Menu } from '@mui/material'
 import { useLogoutQuery } from '__generated__/graphql.client'
 import { toast } from 'react-toastify'
 import { HEADER_HEIGHT } from 'utils/styles'
 import { APP_ROUTES } from 'utils/routes'
 import { CustomButton } from './CustomButton'
-import { useUser } from 'hooks/useUser'
+import { useUser } from 'context/user/useUser'
 
 export const Header: FC = () => {
   const [isDrawerOpen, setDrawerOpen] = useState(false)
   const [isScrolled, setScrolled] = useState(false)
 
-  const user = useUser()
+  const { user } = useUser()
 
   const [{ data, error }, reexecuteLogoutUser] = useLogoutQuery({ pause: true })
 
@@ -112,7 +112,7 @@ export const Header: FC = () => {
               <CloseIcon />
             </IconButton>
 
-            <MenuList>
+            {/* <MenuList>
               <NextLink href="/dashboard">
                 <MenuItem sx={{ py: 1.5 }}>
                   <ListItemIcon>
@@ -121,7 +121,7 @@ export const Header: FC = () => {
                   <ListItemText>Explore locations</ListItemText>
                 </MenuItem>
               </NextLink>
-            </MenuList>
+            </MenuList> */}
           </Drawer>
         </Box>
 

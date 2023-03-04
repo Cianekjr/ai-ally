@@ -21,3 +21,16 @@ model User {
   forgotPasswordToken String?   @unique
   forgotPasswordDate  DateTime?
 }
+
+model ResultImage {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  messageId  String  @unique
+  imageUrl   String
+  width      Int?
+  height     Int?
+  content    String  @db.VarChar(3000)
+  messageUrl String?
+}

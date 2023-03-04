@@ -5,25 +5,21 @@ import { Provider } from 'urql'
 import { ThemeProvider } from '@mui/material/styles'
 import { CssBaseline } from '@mui/material'
 import { brandingTheme } from 'theme'
-import Auth from './Auth'
+import { UserProvider } from 'context/user'
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body>
         <Provider value={urqlClient}>
-          <Auth>
+          <UserProvider>
             <ThemeProvider theme={brandingTheme}>
               <CssBaseline />
               {children}
             </ThemeProvider>
-          </Auth>
+          </UserProvider>
         </Provider>
       </body>
     </html>
   )
-}
-
-export const metadata = {
-  title: 'new metadata',
 }

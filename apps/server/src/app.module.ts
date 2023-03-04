@@ -1,11 +1,14 @@
 import { Module } from '@nestjs/common'
-import { UsersModule } from './users/users.module'
 import { ConfigModule } from '@nestjs/config'
 import { GraphQLModule } from '@nestjs/graphql'
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo'
 import { PrismaModule } from './prisma/prisma.module'
+import { DiscordModule } from './discord/discord.module'
+import { ScheduleModule } from '@nestjs/schedule'
+import { UsersModule } from './users/users.module'
 import { AuthModule } from './auth/auth.module'
 import { MailerModule } from './mailer/mailer.module'
+import { ResultImagesModule } from './resultImages/resultImages.module'
 
 @Module({
   imports: [
@@ -13,6 +16,10 @@ import { MailerModule } from './mailer/mailer.module'
     PrismaModule,
     UsersModule,
     AuthModule,
+    DiscordModule,
+    MailerModule,
+    ResultImagesModule,
+    ScheduleModule.forRoot(),
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       debug: true,
@@ -29,7 +36,6 @@ import { MailerModule } from './mailer/mailer.module'
       introspection: true,
       context: ({ req, res }) => ({ req, res }),
     }),
-    MailerModule,
   ],
 })
 export class AppModule {}

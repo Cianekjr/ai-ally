@@ -1,0 +1,16 @@
+query resultImages (
+    $content: String!,
+    $cursor: Int,
+    $take: Int,
+  ) {
+  resultImages(input: {
+    content: $content,
+    cursor: $cursor,
+    take: $take,
+  }) {
+    id
+    imageUrl
+    content
+    messageUrl
+  }
+}

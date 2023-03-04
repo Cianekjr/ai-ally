@@ -13,6 +13,7 @@ import { toast } from 'react-toastify'
 import { APP_ROUTES } from 'utils/routes'
 import { CustomButton } from '../../components/CustomButton'
 import { useRouter } from 'next/navigation'
+import { useUser } from 'context/user/useUser'
 
 const schema = z.object({
   email: z.string().min(1).email(),
@@ -24,6 +25,8 @@ type SchemaType = z.infer<typeof schema>
 export const LoginForm: FC = () => {
   const [showPassword, setShowPassword] = useState(false)
   const router = useRouter()
+
+  const { updateUser } = useUser()
 
   const toggleShowPassword = (): void => {
     setShowPassword((value) => !value)
@@ -55,7 +58,15 @@ export const LoginForm: FC = () => {
       toast.success('You have been logged successfully.')
 
       if (data) {
-        // dispatch(setUser(data.login))
+        const profile = data.login
+
+        updateUser({
+          id: profile.id,
+          email: profile.email,
+          isFetched: true,
+          isUserLoggedIn: true,
+        })
+
         await router.push(APP_ROUTES.LANDING)
       }
     } catch {

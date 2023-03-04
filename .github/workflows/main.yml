@@ -1,4 +1,4 @@
-name: Linting
+name: Lint & deploy
 
 on:
   push:
@@ -9,8 +9,8 @@ env:
   CI: true
 
 jobs:
-  linting:
-    name: Linting
+  main:
+    name: Lint & deploy
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -45,7 +45,7 @@ jobs:
         uses: akhileshns/heroku-deploy@v3.12.13
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-          heroku_app_name: "guide-me-now-server-production"
+          heroku_app_name: "aially-server-production"
           heroku_email: ${{secrets.HEROKU_DEPLOY_EMAIL}}
           procfile: "web: cd apps/server && pnpm run start:prod"
           region: eu
@@ -54,7 +54,7 @@ jobs:
         env:
           HD_DATABASE_URL: ${{secrets.DATABASE_URL}}
           HD_JWT_SECRET: ${{secrets.JWT_SECRET}}
-          HD_CLIENT_URL: https://guide-me-now-client-production.herokuapp.com
+          HD_CLIENT_URL: https://aially-client-production.herokuapp.com
           # HD_MAILGUN_API_KEY: ${{secrets.MAILGUN_API_KEY}}
           HD_NODE_MODULES_CACHE: false
           HD_USE_YARN_CACHE: false
@@ -63,14 +63,14 @@ jobs:
         uses: akhileshns/heroku-deploy@v3.12.13
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-          heroku_app_name: "guide-me-now-client-production"
+          heroku_app_name: "aially-client-production"
           heroku_email: ${{secrets.HEROKU_DEPLOY_EMAIL}}
           procfile: "web: cd apps/client && pnpm run start"
           region: eu
           rollbackonhealthcheckfailed: true
           buildpack: https://github.com/unfold/heroku-buildpack-pnpm
         env:
-          HD_APP_PUBLIC_URL: https://guide-me-now-client-production.herokuapp.com
-          HD_NEXT_PUBLIC_API_URL: https://guide-me-now-server-production.herokuapp.com/graphql
+          HD_APP_PUBLIC_URL: https://aially-client-production.herokuapp.com
+          HD_NEXT_PUBLIC_API_URL: https://aially-server-production.herokuapp.com/graphql
           HD_NODE_MODULES_CACHE: false
           HD_USE_YARN_CACHE: false
