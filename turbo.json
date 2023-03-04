@@ -34,7 +34,8 @@
         "PORT",
         "JWT_SECRET",
         "DATABASE_URL",
-        "MAILGUN_API_KEY"
+        "MAILGUN_API_KEY",
+        "DISCORD_TOKEN"
       ],
       "outputs": [
         "dist/**",
