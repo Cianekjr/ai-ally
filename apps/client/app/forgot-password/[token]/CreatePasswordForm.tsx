@@ -10,7 +10,8 @@ import { TextField, Box, Typography, InputAdornment, IconButton } from '@mui/mat
 import { VisibilityOff as VisibilityOffIcon, Visibility as VisibilityIcon } from '@mui/icons-material'
 import { FC, useState } from 'react'
 import { toast } from 'react-toastify'
-import { CustomButton } from '../../../components/CustomButton'
+import { CustomButton } from 'components/CustomButton'
+// eslint-disable-next-line import/named
 import { useSearchParams } from 'next/navigation'
 
 const schema = z

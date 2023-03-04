@@ -38,6 +38,8 @@ export const View: FC = () => {
     pause: true,
   })
 
+  console.info(data)
+
   const onSubmit: SubmitHandler<SchemaType> = async () => {
     try {
       refetchResultImages({
