@@ -3,7 +3,7 @@ name: Lint & deploy
 on:
   push:
     branches:
-      - dev
+      - staging
 
 env:
   CI: true
@@ -11,6 +11,7 @@ env:
 jobs:
   main:
     name: Lint & deploy
+    environment: staging
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -51,6 +52,14 @@ jobs:
           region: eu
           rollbackonhealthcheckfailed: true
           buildpack: https://github.com/unfold/heroku-buildpack-pnpm
+        env:
+          HD_DATABASE_URL: ${{secrets.DATABASE_URL}}
+          HD_JWT_SECRET: ${{secrets.JWT_SECRET}}
+          HD_CLIENT_URL: ${{secrets.APP_PUBLIC_URL}}
+          HD_DISCORD_TOKEN: ${{secrets.DISCORD_TOKEN}}
+          # HD_MAILGUN_API_KEY: ${{secrets.MAILGUN_API_KEY}}
+          HD_NODE_MODULES_CACHE: false
+          HD_USE_YARN_CACHE: false
 
       - name: Deploy client
         uses: akhileshns/heroku-deploy@v3.12.13
@@ -62,3 +71,8 @@ jobs:
           region: eu
           rollbackonhealthcheckfailed: true
           buildpack: https://github.com/unfold/heroku-buildpack-pnpm
+        env:
+          HD_APP_PUBLIC_URL: ${{secrets.APP_PUBLIC_URL}}
+          HD_NEXT_PUBLIC_API_URL: ${{secrets.NEXT_PUBLIC_API_URL}}
+          HD_NODE_MODULES_CACHE: false
+          HD_USE_YARN_CACHE: false
